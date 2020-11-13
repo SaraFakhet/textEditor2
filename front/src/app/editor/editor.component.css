@@ -1,0 +1,15 @@
+div {
+    float: left;
+}
+
+textarea {
+    width: 60%;
+    height: 80%;
+    padding: 0.25em;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 14pt;
+    font-family: sans-serif;
+    background-color:#f8f9fa;
+    color:black;
+}

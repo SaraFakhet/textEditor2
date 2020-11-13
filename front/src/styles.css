@@ -121,23 +121,19 @@
     color: white;
     margin: 0;
   }
-  
-  /* Checkout Cart, Shipping Prices */
-  
-  .cart-item, .shipping-item {
+
+  /* Editor */
+
+  app-editor  {
     width: 100%;
-    min-width: 400px;
-    max-width: 450px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 16px 32px;
-    margin-bottom: 8px;
-    border-radius: 2px;
-    background-color: #EEEEEE;
+    height: 500px;
+    float: left;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
   }
-  
-  
+
   /*
   Copyright Google LLC. All Rights Reserved.
   Use of this source code is governed by an MIT-style license that
