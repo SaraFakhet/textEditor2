@@ -1,0 +1,14 @@
+front/node_modules
+front/.idea
+front/package-lock.json
+
+# IDE - VSCode
+front/.vscode/*
+!front/.vscode/settings.json
+!front/.vscode/tasks.json
+!front/.vscode/launch.json
+!front/.vscode/extensions.json
+
+# e2e
+front/e2e/*.js
+front/e2e/*.map
