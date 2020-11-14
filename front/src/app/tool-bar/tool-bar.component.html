@@ -1,0 +1,151 @@
+<div class="format"
+         role="toolbar"
+         aria-label="Text Formatting"
+         aria-controls="textarea1">
+        <div class="group characteristics">
+            <button class="item bold popup"
+                    aria-pressed="false"
+                    value="bold"
+                    tabindex="0">
+                <span class="fa fa-bold" aria-hidden="true"></span>
+                <span class="popup-label">
+            Bold
+          </span>
+            </button>
+            <button class="item italic popup"
+                    aria-pressed="false"
+                    value="italic"
+                    tabindex="-1">
+                <span class="fa fa-italic" aria-hidden="true"></span>
+                <span class="popup-label">
+            Italic
+          </span>
+            </button>
+            <button class="item underline popup"
+                    aria-pressed="false"
+                    value="underline"
+                    tabindex="-1">
+                <span class="fa fa-underline" aria-hidden="true"></span>
+                <span class="popup-label">
+            Underline
+          </span>
+            </button>
+        </div>
+        <div class="group"
+             role="radiogroup"
+             aria-label="Text Alignment">
+            <button role="radio"
+                    class="item align-left popup"
+                    aria-checked="true"
+                    tabindex="-1">
+                <span class="fa fa-align-left" aria-hidden="true"></span>
+                <span class="popup-label">
+            Text Align Left
+          </span>
+            </button>
+            <button role="radio"
+                    class="item align-center popup"
+                    aria-checked="false"
+                    tabindex="-1">
+                <span class="fa fa-align-center" aria-hidden="true"></span>
+                <span class="popup-label">
+            Text Align Center
+          </span>
+            </button>
+            <button role="radio"
+                    class="item align-right popup"
+                    aria-checked="false"
+                    tabindex="-1">
+                <span class="fa fa-align-right" aria-hidden="true"></span>
+                <span class="popup-label">
+            Text Align Right
+          </span>
+            </button>
+        </div>
+        <div class="menu-popup group">
+            <button aria-haspopup="true"
+                    aria-controls="menu1"
+                    class="item menu-button"
+                    tabindex="-1"
+                    aria-label="Font: Sans-serif"
+                    style="text-align: left; width: 140px; font-family: sans-serif">
+                SANS-SERIF
+                <span class="decrease">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="12"
+                 height="12">
+              <polygon class="decrease"
+                       fill="#333"
+                       points="0,2 11,2 6,12"></polygon>
+            </svg>
+          </span>
+            </button>
+            <ul role="menu"
+                id="menu1"
+                aria-label="Font Family">
+                <li role="menuitemradio"
+                    aria-checked="true"
+                    style="font-family: sans-serif">
+                    Sans-serif
+                </li>
+                <li role="menuitemradio"
+                    aria-checked="false"
+                    style="font-family: serif">
+                    Serif
+                </li>
+                <li role="menuitemradio"
+                    aria-checked="false"
+                    style="font-family: monospace">
+                    Monospace
+                </li>
+                <li role="menuitemradio"
+                    aria-checked="false"
+                    style="font-family: fantasy">
+                    Fantasy
+                </li>
+                <li role="menuitemradio"
+                    aria-checked="false"
+                    style="font-family: cursive">
+                    Cursive
+                </li>
+            </ul>
+        </div>
+        <div class="group">
+            <div class="item spinbutton"
+                 role="spinbutton"
+                 tabindex="-1"
+                 aria-valuenow="14"
+                 aria-valuetext="14pt"
+                 aria-valuemin="8"
+                 aria-valuemax="40"
+                 aria-label="Font size in points">
+          <span class="value">
+            14pt
+          </span>
+                <span class="increase">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="12"
+                 height="12">
+              <polygon class="increase"
+                       fill="#333"
+                       points="0,12 11,12 6,2"></polygon>
+            </svg>
+          </span>
+                <span class="decrease">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="12"
+                 height="12">
+              <polygon class="decrease"
+                       fill="#333"
+                       points="0,2 11,2 6,12"></polygon>
+            </svg>
+          </span>
+            </div>
+        </div>
+    </div>
+<script src="/js/fontMenu.js"></script>
+<script src="/js/fontMenuButton.js"></script>
+<script src="/js/fontMenuItem.js"></script>
+<script src="/js/fontToolbarItem.js"></script>
+<script src="/js/formatToolbar.js"></script>
+<script src="/js/spinButton.js"></script>
