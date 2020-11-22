@@ -29,9 +29,9 @@ SpinButton.prototype.init = function () {
     this.decreaseDomNode.addEventListener('click', this.handleDecreaseClick.bind(this));
 	
 		
-	socket.on('fontSize', (value) => {
+	/*socket.on('fontSize', (value) => {
 		this.setValue(value);
-	})
+	}) */
 
 };
 
@@ -56,12 +56,12 @@ SpinButton.prototype.handleIncreaseClick = function (event) {
     this.setValue(this.valueNow + 1);
     event.preventDefault();
     event.stopPropagation();
-	socket.emit('fontSize', this.valueNow);
+	//socket.emit('fontSize', this.valueNow);
 };
 
 SpinButton.prototype.handleDecreaseClick = function (event) {
     this.setValue(this.valueNow - 1);
     event.preventDefault();
     event.stopPropagation();
-	socket.emit('fontSize', this.valueNow);
+	//socket.emit('fontSize', this.valueNow);
 };

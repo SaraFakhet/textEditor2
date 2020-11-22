@@ -41,7 +41,8 @@ FormatToolbar.prototype.init = function () {
         var s = new SpinButton(spinButtons[i], this);
         s.init();
     }
-	
+    
+    /*
 	socket.on('bold', (value) => {
 		this.setBold(toolbarItem, value);
 	})
@@ -61,7 +62,9 @@ FormatToolbar.prototype.init = function () {
 	
 	socket.on('font', (value) => {
 		this.setFontFamily(value);
-	})
+    })
+    
+    */
 };
 
 FormatToolbar.prototype.setBold = function (toolbarItem, isBold) {
@@ -176,23 +179,23 @@ FormatToolbar.prototype.activateItem = function (toolbarItem) {
     switch (toolbarItem.buttonAction) {
         case 'bold':
             this.toggleBold(toolbarItem);
-            socket.emit('bold');
+            //socket.emit('bold');
             break;
         case 'underline':
             this.toggleUnderline(toolbarItem);
-            socket.emit('underline');
+            //socket.emit('underline');
             break;
         case 'italic':
             this.toggleItalic(toolbarItem);
-            socket.emit('italic');
+            //socket.emit('italic');
             break;
         case 'align':
             this.setAlignment(toolbarItem);
-			socket.emit('align', toolbarItem.value);
+			//socket.emit('align', toolbarItem.value);
             break;
         case 'font-family':
             this.setFontFamily(toolbarItem.value);
-			socket.emit('font', toolbarItem.value);
+			//socket.emit('font', toolbarItem.value);
             break;
         default:
             break;
