@@ -14,8 +14,6 @@ var SpinButton = function (domNode, toolbar)  {
 // Initialize slider
 SpinButton.prototype.init = function () {
 
-    print("inside spinButton js");
-
     if (this.domNode.getAttribute('aria-valuemin')) {
         this.valueMin = parseInt((this.domNode.getAttribute('aria-valuemin')));
     }
