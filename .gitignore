@@ -46,3 +46,8 @@ front/typings
 # System Files
 front/.DS_Store
 front/Thumbs.db
+
+
+# venv
+back/venv*
+back/*pycache*
