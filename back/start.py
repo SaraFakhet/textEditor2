@@ -1,11 +1,15 @@
 from flask import Flask, url_for, request
 from markupsafe import escape
+from flask import jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
 
 @app.route('/')
 def index():
-    return 'index'
+    return jsonify('index')
 
 @app.route('/login')
 def login():
