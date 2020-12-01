@@ -11,7 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 # configure pusher object
-pusher_client = pusher.Pusher(
+pusher_client = Pusher(
     app_id = "1105624",
     key = "e0f07ea56123ef7bab7b",
     secret = "63ec953d6edd77f0ddf6",
@@ -23,9 +23,13 @@ pusher_client = pusher.Pusher(
 def index():
     return jsonify('index')
 
-@app.route('/login')
-def login():
-    return 'login'
+
+
+@app.route('/text-box', methods = ['POST'])
+def textBox():
+    data = json.loads(request.data) # load JSON data from request
+    pusher_client.trigger('editor', 'text-box', data)
+    return jsonify(data)
 
 @app.route('/user/<username>')
 def profile(username):
@@ -33,8 +37,7 @@ def profile(username):
 
 with app.test_request_context():
     print(url_for('index'))
-    print(url_for('login'))
-    print(url_for('login', next='/'))
+    print(url_for('textBox'))
     print(url_for('profile', username='John Doe'))
 
 # run Flask app in debug mode

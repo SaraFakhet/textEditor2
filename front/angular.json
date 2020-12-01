@@ -33,7 +33,8 @@
               "src/assets/js/fontMenuItem.js",
               "src/assets/js/fontToolbarItem.js",
               "src/assets/js/formatToolbar.js",
-              "src/assets/js/spinButton.js"
+              "src/assets/js/spinButton.js",
+              "src/assets/js/Pusher.js"
             ]
           },
           "configurations": {
@@ -128,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "front"
+  "defaultProject": "front",
+  "cli": {
+    "analytics": "86898da1-0389-4fe2-af56-e3e28cde8ab4"
+  }
 }

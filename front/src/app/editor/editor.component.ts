@@ -24,6 +24,7 @@ export class EditorComponent implements OnInit {
     this.text = event;
     if (this.text != '') {
       console.log(event);
+      this.http.post('http://localhost:5000/text-box', {'body': event}).subscribe(data => {});
       this.printLoginRoute();
     }
   }
