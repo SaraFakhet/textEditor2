@@ -1,11 +1,23 @@
-from flask import Flask, url_for, request
+# ./app.py
+
+from flask import Flask, request, jsonify, url_for
 from markupsafe import escape
-from flask import jsonify
+from pusher import Pusher
+import json
 from flask_cors import CORS
 
+# create flask app
 app = Flask(__name__)
 CORS(app)
 
+# configure pusher object
+pusher_client = pusher.Pusher(
+    app_id = "1105624",
+    key = "e0f07ea56123ef7bab7b",
+    secret = "63ec953d6edd77f0ddf6",
+    cluster = "eu",
+    ssl=True
+)
 
 @app.route('/')
 def index():
@@ -24,3 +36,8 @@ with app.test_request_context():
     print(url_for('login'))
     print(url_for('login', next='/'))
     print(url_for('profile', username='John Doe'))
+
+# run Flask app in debug mode
+app.run(debug=True)
+
+pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
