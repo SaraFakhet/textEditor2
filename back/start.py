@@ -28,7 +28,7 @@ def index():
 @app.route('/text-box', methods = ['POST'])
 def textBox():
     data = json.loads(request.data) # load JSON data from request
-    pusher_client.trigger('editor', 'text-box', data)
+    pusher_client.trigger('editor', 'text-box', data['body'])
     return jsonify(data)
 
 @app.route('/user/<username>')

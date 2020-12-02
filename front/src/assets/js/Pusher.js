@@ -6,6 +6,7 @@ var pusher = new Pusher('e0f07ea56123ef7bab7b', {
 });
 
 var channel = pusher.subscribe('editor');
+
 channel.bind('text-box', function(data) {
-  alert(JSON.stringify(data));
+  this.text = data;
 });
