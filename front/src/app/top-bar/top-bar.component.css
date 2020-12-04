@@ -1,3 +1,7 @@
+body {
+    padding: 0;
+}
+
 .icon-bar {
     display: inline-flex;
     float: center;
@@ -22,4 +26,253 @@ i {
     position: relative;
     top: 5px;
     left: 5px;
+}
+
+body {
+    margin:0;
+    text-align:center;
+    background-color:#dfe0e1;
+}
+
+h1,
+.popupTitle {
+    font-family: sans-serif;
+}
+
+.loginTitle {
+    font-size: 32pt;
+    color:white;
+}
+
+.button {
+    background-color: #555;
+    border: 2px solid white;
+    border-radius: 30px;
+    text-decoration: none;
+    padding: 10px 28px;
+    color: white;
+    display: inline-block;
+}
+
+.button:hover {
+    background-color: #1976d2;
+}
+
+body {
+    margin:0;
+    text-align:center;
+    background-color:#dfe0e1;
+}
+
+h1,
+.popupTitle {
+    font-family: sans-serif;
+}
+
+.loginTitle {
+    font-size: 32pt;
+    color:white;
+}
+
+textarea {
+    width: 990px;
+    padding: 0.25em;
+    border: 2px solid black;
+    height: 400px;
+    font-size: 14pt;
+    font-family: sans-serif;
+    border-radius: 5px;
+    background-color:#f8f9fa;
+    color:black;
+}
+
+.active {
+    background-color: #1976d2;
+}
+
+.bg-modal {
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.modal-contents {
+    height: 120px;
+    width: 400px;
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    border-radius: 4px;
+}
+
+input {
+    margin: 15px auto;
+    display: block;
+    width: 50%;
+    padding: 8px;
+    border: 1px solid gray;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 42px;
+    color: #333;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #666;
+}
+
+.bg-modal2 {
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.modal-contentsbis {
+    height: 420px;
+    width: 570px;
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    border-radius: 4px;
+}
+
+.close2 {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 42px;
+    color: #333;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.close2:hover {
+    color: #666;
+}
+
+
+.doc_grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(60px, auto);
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+    justify-content: center;
+    width: 500px;
+    margin-left: 30px;
+}
+
+.p {
+    margin: 10px;
+    font-family: sans-serif;
+}
+
+
+.bg-modal-login {
+    background-color: #1976d2;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    display: none; /*change to flex*/
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.bg-modal3 {
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.modal-contentsbisbis {
+    height: 420px;
+    width: 570px;
+    background-color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    border-radius: 4px;
+}
+
+.close3 {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 42px;
+    color: #333;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.close3:hover {
+    color: #666;
+}
+
+
+.doc_grid2 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(60px, auto);
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+    justify-content: center;
+    width: 500px;
+    margin-left: 30px;
+}
+
+.p {
+    margin: 10px;
+    font-family: sans-serif;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 105px;
+}
+
+.img {
+    height: 105px;
+}
+
+.buffer {
+    width: 250px;
+    border: 1px solid;
+    border-radius: 3px;
+    height: 250px;
+    overflow-wrap: anywhere;
+    overflow: hidden;
+    overflow-y: scroll;
+    text-align: justify;
+    margin: auto;
+}
+
+.buffer_info {
+    font-family: sans-serif;
+    margin: 10px;
 }

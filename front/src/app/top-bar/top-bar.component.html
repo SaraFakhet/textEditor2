@@ -1,16 +1,64 @@
 <h1>Nav Bar</h1>
-<a class="icon-bar">
+<a class="icon-bar" (click)="openSelectFiles()">
     <div class="icon-text-bar">
         <i class="material-icons">search</i>Ouvrir
     </div>
 </a>
-<a class="icon-bar">
+<a class="icon-bar" (click)="openSaveFiles()">
     <div class="icon-text-bar">
         <i class="material-icons">save</i>Sauvegarder
     </div>
 </a>
-<a class="icon-bar">
+<a class="icon-bar" (click)="openRemoveFiles()">
     <div class="icon-text-bar">
         <i class="material-icons">delete</i>Supprimer
     </div>
 </a>
+
+<div class="bg-modal">
+    <div class="modal-contents">
+        <div class="close" (click)="closeSaveFiles()">+</div>
+        <form action="">
+            <div class="popupTitle">Sauvegarder</div>
+            <input type="text" id="submitSaveInput" placeholder="Nom du fichier">
+            <a href="#" id="submitSaveButton" class="button">Valider</a>
+        </form>
+    </div>
+</div>
+
+<div class="bg-modal2">
+    <div class="modal-contentsbis">
+        <div class="close2" (click)="closeSelectFiles()">+</div>
+        <form action="" style="height: inherit;">
+            <div class="popupTitle" style="margin-bottom: 30px">Sélectionnez un fichier</div>
+            <div style="overflow: hidden; overflow-y: scroll; height: 360px;">
+                <div class="doc_grid" id="grid">
+
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="bg-modal3">
+    <div class="modal-contentsbisbis">
+        <div class="close3" (click)="closeRemoveFiles()">+</div>
+        <form action="" style="height: inherit;">
+            <div class="popupTitle" style="margin-bottom: 30px">Choisissez un fichier à supprimer</div>
+            <div style="overflow: hidden; overflow-y: scroll; height: 360px;">
+                <div class="doc_grid2" id="grid2">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="bg-modal-login">
+        <form action="">
+            <div class="popupTitle loginTitle">Bienvenue !</div>
+            <input type="text" id="loginInput" placeholder="Pseudo">
+            <a href="#" id="loginButton" class="button">Valider</a>
+        </form>
+</div>

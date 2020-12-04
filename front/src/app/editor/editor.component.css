@@ -13,3 +13,25 @@ textarea {
     background-color:#f8f9fa;
     color:black;
 }
+
+/*.versionning {
+    background: white;
+    width: 1000px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    border: 1px solid;
+    border-radius: 5px;
+    height: 350px;
+}
+
+.versio_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: minmax(60px, auto);
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+    justify-content: center;
+    width: 900px;
+    margin: auto;
+}*/
