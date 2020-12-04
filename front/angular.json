@@ -33,8 +33,7 @@
               "src/assets/js/fontMenuItem.js",
               "src/assets/js/fontToolbarItem.js",
               "src/assets/js/formatToolbar.js",
-              "src/assets/js/spinButton.js",
-              "src/assets/js/Pusher.js"
+              "src/assets/js/spinButton.js"
             ]
           },
           "configurations": {

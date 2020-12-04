@@ -1,5 +1,2 @@
 <h1>Document collaboratif</h1>
-<form #contactForm="ngForm">
-    <button type="button" (click)="patchValue()">Patch Value</button>
-    <textarea id="textarea" placeholder="Ecrivez ici..." name="textarea" (ngModelChange)="keyPress($event)" [(ngModel)]="text"></textarea>
-</form>
+<textarea id="textarea" placeholder="Ecrivez ici..." name="textarea" (ngModelChange)="keyPress($event)" [(ngModel)]="text"></textarea>

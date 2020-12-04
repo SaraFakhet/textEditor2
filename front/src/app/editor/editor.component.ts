@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import Pusher, { Channel } from 'pusher-js';
-import { NgForm, NgModel } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-editor',
@@ -32,15 +32,10 @@ export class EditorComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.channel.bind('text-box', function(data) {
-    this.text=(JSON.stringify(data));
+    this.text=(data);
       console.log(this.text);
       //alert(this.text);
-    });
-  }
-
-  //to remove
-  patchValue() {
-    this.contactForm.control.patchValue({textarea: this.text});
+    }, this);
   }
 
   keyPress(event) {
