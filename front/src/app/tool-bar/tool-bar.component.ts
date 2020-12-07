@@ -32,6 +32,12 @@ export class ToolBarComponent implements OnInit {
     {
       (document.getElementById('textarea1') as HTMLInputElement).style.fontWeight = "bold";
       (document.getElementById('boldId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
+      (document.getElementById('fontType') as HTMLInputElement).setAttribute('aria-label', 'Font: Fantasy');
+      (document.getElementById('fontType') as HTMLInputElement).innerHTML = 'FANTASY';
+      (document.getElementById('fontType') as HTMLInputElement).style.fontFamily = 'Fantasy';
+      (document.getElementById('textarea1') as HTMLInputElement).style.fontFamily = 'Fantasy';
+      (document.getElementById('spinButtonId') as HTMLInputElement).innerHTML = "20 pt";
+      (document.getElementById('textarea1') as HTMLInputElement).style.fontSize = "20"+ 'pt';
     }
     else
      {
