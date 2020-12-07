@@ -28,7 +28,14 @@ def index():
 @app.route('/text-box', methods = ['POST'])
 def textBox():
     data = json.loads(request.data) # load JSON data from request
-    pusher_client.trigger('editor', 'text-box', data['body'])
+    pusher_client.trigger('editor', 'text-box', data)
+    return jsonify(data)
+
+
+@app.route('/tool-box', methods = ['POST'])
+def toolBox():
+    data = json.loads(request.data) # load JSON data from request
+    pusher_client.trigger('editor', 'tool-box', data)
     return jsonify(data)
 
 @app.route('/user/<username>')
@@ -38,6 +45,7 @@ def profile(username):
 with app.test_request_context():
     print(url_for('index'))
     print(url_for('textBox'))
+    print(url_for('toolBox'))
     print(url_for('profile', username='John Doe'))
 
 # run Flask app in debug mode
