@@ -175,7 +175,7 @@ export class ToolBarComponent implements OnInit {
   }
 
   CenterPress() {
-    this.center = true
+    this.center = true;
     this.left = false;
     this.right = false;
     this.http.post('http://localhost:5000/tool-box', {'center': true}).subscribe(data => {});
