@@ -137,12 +137,15 @@ export class ToolBarComponent implements OnInit {
       this.setItalic(data['italic']);
     if (data['underline'] != undefined)
       this.setUnderline(data['underline']);
-    if (data['left'] != undefined)
-      this.setLeft();
-    if (data['center'] != undefined)
-      this.setCenter();
-    if (data['right'] != undefined)
-      this.setRight();
+    if (data['align'] != undefined)
+    {
+      if (data['align'] == 'left')
+        this.setLeft();
+      if (data['align'] == 'center')
+        this.setCenter();
+      if (data['align'] == 'right')
+        this.setRight();
+    }
     if (data['fontSize'] != undefined)
       this.setFontSize(data['fontSize']);
     if (data['fontFamily'] != undefined)
@@ -171,21 +174,21 @@ export class ToolBarComponent implements OnInit {
     this.left = true;
     this.center = false;
     this.right = false;
-    this.http.post('http://localhost:5000/tool-box', {'left': true}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box', {'align': 'left'}).subscribe(data => {});
   }
 
   CenterPress() {
     this.center = true;
     this.left = false;
     this.right = false;
-    this.http.post('http://localhost:5000/tool-box', {'center': true}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box', {'align': 'center'}).subscribe(data => {});
   }
 
   RightPress() {
     this.right = true;
     this.center = false;
     this.left = false;
-    this.http.post('http://localhost:5000/tool-box', {'right':true}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box', {'align':'right'}).subscribe(data => {});
   }
 
   IncreasePress() {
