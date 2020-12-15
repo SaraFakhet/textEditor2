@@ -19,6 +19,7 @@ export class EditorComponent implements OnInit {
   pusher: Pusher;
   channel: Channel;
   filename: string;
+  history: Object;
 
   constructor(private http: HttpClient, private data: DataService) { 
    }

@@ -56,7 +56,7 @@
 </div>
 
 <div class="bg-modal-login">
-        <form (ngSubmit)="onSubmitLogin(pseudo)">
+        <form (ngSubmit)="onSubmitLogin(pseudo)" style="border: 1px solid white; padding: 30px; border-radius: 40px;">
             <div class="popupTitle loginTitle">Bienvenue !</div>
             <input type="text" id="loginInput" placeholder="Pseudo" name="pseudo" ngModel required #pseudo="ngModel">
             <button id="loginButton" type="submit" class="button">Valider</button>
@@ -64,9 +64,9 @@
 </div>
 
 <div class="bg-modal-filename">
-    <form (ngSubmit)="onSubmitFilename(filename)">
+    <form (ngSubmit)="onSubmitFilename(filename)" style="border: 1px solid white; padding: 30px; border-radius: 40px;">
         <div class="popupTitle loginFilename">Choisissez un fichier</div>
         <input type="text" placeholder="Filename" name="filename" ngModel required #filename="ngModel">
-        <button id="filenameButton" type="submit" class="button">Valider</button>
+        <button id="filenameButton" type="submit" class="button" style="margin-left: 150px;">Valider</button>
     </form>
 </div>
