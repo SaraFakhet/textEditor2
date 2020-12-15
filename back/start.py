@@ -23,12 +23,67 @@ pusher_client = Pusher(
 def index():
     return jsonify('index')
 
+class Files:
+    def __init__(self, filename, text='', bold=False, italic=False, underline=False, alignement='left', font='Sans-Serif'):
+        self.filename = filename
+        self.text = text
+        self.bold = bold
+        self.italic = italic
+        self.underline = underline
+        self.alignement = alignement
+        self.font = font
 
 
-@app.route('/text-box', methods = ['POST'])
-def textBox():
+list_open_files = []
+
+
+def getName(f):
+    return f.filename
+
+
+@app.route('/list-open-files')
+def getListOpenFiles():
+    return jsonify(list_open_files)
+
+
+@app.route('/load-file/<filename>')
+def loadFile(filename):
+    for f in list_open_files:
+        if (f.filename == filename):
+            return jsonify(f)
+    return None
+
+
+'''
+@app.route('/save/<filename>')
+def save(filename):
+    # Push dans la DB le open file qui a le nom filename
+'''
+
+
+@app.route('/open-files/<filename>')
+def openFile(filename):
+    f = Files(filename)
+    list_open_files.append(f) # use files class
+
+
+@app.route('/text-box/<file>', methods = ['POST'])
+def textBox(file):
     data = json.loads(request.data) # load JSON data from request
-    pusher_client.trigger('editor', 'text-box', data['body'])
+    pusher_client.trigger(file, 'text-box', data)
+
+    for f in list_open_files:
+        if (f.filename == file):
+            f.text = data
+            break
+
+    return jsonify(data)
+
+
+@app.route('/tool-box/<file>', methods = ['POST'])
+def toolBox(file):
+    data = json.loads(request.data) # load JSON data from request
+    pusher_client.trigger(file, 'tool-box', data)
     return jsonify(data)
 
 @app.route('/user/<username>')
@@ -38,6 +93,7 @@ def profile(username):
 with app.test_request_context():
     print(url_for('index'))
     print(url_for('textBox'))
+    print(url_for('toolBox'))
     print(url_for('profile', username='John Doe'))
 
 # run Flask app in debug mode

@@ -32,18 +32,17 @@ export class EditorComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.channel.bind('text-box', function(data) {
-    this.text=(data);
-      console.log(this.text);
-      //alert(this.text);
+    this.text=(data['body']);
+      //console.log(this.text);
     }, this);
   }
 
   keyPress(event) {
     this.text = event;
     if (this.text != '') {
-      console.log(event);
+      //console.log(event);
       this.http.post('http://localhost:5000/text-box', {'body': event}).subscribe(data => {});
-      this.printLoginRoute();
+      //this.printLoginRoute();
     }
   }
 

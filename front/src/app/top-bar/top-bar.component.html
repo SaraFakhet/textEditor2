@@ -17,12 +17,12 @@
 
 <div class="bg-modal">
     <div class="modal-contents">
-        <div class="close" (click)="closeSaveFiles()">+</div>
+        <div class="close" (click)="closeUnsaveFiles()">+</div>
         <form action="">
             <div class="popupTitle">Sauvegarder</div>
             <input type="text" id="submitSaveInput" placeholder="Nom du fichier">
-            <a href="#" id="submitSaveButton" class="button">Valider</a>
-        </form>
+            <a href="#" id="submitSaveButton" (click)="closeSaveFiles()" class="button">Valider</a>
+        </form> 
     </div>
 </div>
 

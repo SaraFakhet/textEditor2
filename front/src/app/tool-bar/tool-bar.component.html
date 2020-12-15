@@ -7,7 +7,7 @@
          aria-label="Text Formatting"
          aria-controls="textarea1">
         <div class="group characteristics">
-            <button class="item bold popup"
+            <button id="boldId" class="item bold popup" (click)="BoldPress()"
                     aria-pressed="false"
                     value="bold"
                     tabindex="0">
@@ -16,7 +16,7 @@
             Bold
           </span>
             </button>
-            <button class="item italic popup"
+            <button id="italicId" class="item italic popup" (click)="ItalicPress()"
                     aria-pressed="false"
                     value="italic"
                     tabindex="-1">
@@ -25,7 +25,7 @@
             Italic
           </span>
             </button>
-            <button class="item underline popup"
+            <button id="underlineId" class="item underline popup" (click)="UnderlinePress()"
                     aria-pressed="false"
                     value="underline"
                     tabindex="-1">
@@ -38,7 +38,7 @@
         <div class="group"
              role="radiogroup"
              aria-label="Text Alignment">
-            <button role="radio"
+            <button id="leftId" role="radio" (click)="LeftPress()"
                     class="item align-left popup"
                     aria-checked="true"
                     tabindex="-1">
@@ -47,7 +47,7 @@
             Text Align Left
           </span>
             </button>
-            <button role="radio"
+            <button id="centerId" role="radio" (click)="CenterPress()"
                     class="item align-center popup"
                     aria-checked="false"
                     tabindex="-1">
@@ -56,7 +56,7 @@
             Text Align Center
           </span>
             </button>
-            <button role="radio"
+            <button id="rightId" role="radio" (click)="RightPress()"
                     class="item align-right popup"
                     aria-checked="false"
                     tabindex="-1">
@@ -67,7 +67,7 @@
             </button>
         </div>
         <div class="menu-popup group">
-            <button aria-haspopup="true"
+            <button aria-haspopup="true" id='fontType'
                     aria-controls="menu1"
                     class="item menu-button"
                     tabindex="-1"
@@ -87,27 +87,27 @@
             <ul role="menu"
                 id="menu1"
                 aria-label="Font Family">
-                <li role="menuitemradio"
+                <li id="sansserifId" role="menuitemradio" (click)="SansSerifPress()"
                     aria-checked="true"
                     style="font-family: sans-serif">
                     Sans-serif
                 </li>
-                <li role="menuitemradio"
+                <li id="serifId" role="menuitemradio" (click)="SerifPress()"
                     aria-checked="false"
                     style="font-family: serif">
                     Serif
                 </li>
-                <li role="menuitemradio"
+                <li id="monospaceId" role="menuitemradio" (click)="MonospacePress()"
                     aria-checked="false"
                     style="font-family: monospace">
                     Monospace
                 </li>
-                <li role="menuitemradio"
+                <li id="fantasyId" role="menuitemradio" (click)="FantasyPress()"
                     aria-checked="false"
                     style="font-family: fantasy">
                     Fantasy
                 </li>
-                <li role="menuitemradio"
+                <li id="cursiveId" role="menuitemradio" (click)="CursivePress()"
                     aria-checked="false"
                     style="font-family: cursive">
                     Cursive
@@ -123,10 +123,10 @@
                  aria-valuemin="8"
                  aria-valuemax="40"
                  aria-label="Font size in points">
-          <span class="value">
+          <span class="value" id="spinButtonId">
             14pt
           </span>
-                <span class="increase">
+                <span class="increase" (click)="IncreasePress()">
             <svg xmlns="http://www.w3.org/2000/svg"
                  width="12"
                  height="12">
@@ -135,7 +135,7 @@
                        points="0,12 11,12 6,2"></polygon>
             </svg>
           </span>
-                <span class="decrease">
+                <span class="decrease" (click)="DecreasePress()">
             <svg xmlns="http://www.w3.org/2000/svg"
                  width="12"
                  height="12">

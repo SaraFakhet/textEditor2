@@ -47,9 +47,9 @@ SpinButton.prototype.setValue = function (value) {
     this.valueText = value + ' pt';
 
     if (this.valueDomNode) {
-        this.valueDomNode.innerHTML = this.valueText;
+        //this.valueDomNode.innerHTML = this.valueText;
     }
-    this.toolbar.changeFontSize(value);
+    //this.toolbar.changeFontSize(value);
 };
 
 SpinButton.prototype.handleIncreaseClick = function (event) {
