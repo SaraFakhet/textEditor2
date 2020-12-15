@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck, KeyValueDiffers, } from '@angular/core';
 import Pusher, { Channel } from 'pusher-js';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from "../data.service";
@@ -21,20 +21,37 @@ export class ToolBarComponent implements OnInit {
 
   pusher: Pusher;
   channel: Channel;
+  differ: any;
 
   pseudo: string;
   filename: string;
 
-  constructor(private http: HttpClient, private data: DataService) { }
+  constructor(private http: HttpClient, private data: DataService, private differs: KeyValueDiffers) { }
 
   ngOnInit() {
         this.data.currentPseudo.subscribe(pseudo => this.pseudo = pseudo);
         this.data.currentFilename.subscribe(filename => this.filename = filename);
         this.data.currentChannel.subscribe(channel => this.channel = channel);
+        this.data.currentBold.subscribe(bold => this.bold = bold);
+        this.differ = this.differs.find({}).create();
   }
 
-  setBold(data:Boolean) {
-    this.bold=(data);
+  ngDoCheck() {
+    const change = this.differ.diff(this);
+    if (change) {
+      change.forEachChangedItem(item => {
+        console.log('item changed', item);
+        if (item.key === "bold")
+          //console.log("ici " + this.bold)
+          this.setBold();
+      });
+    } else {
+      
+    }
+  }
+
+  setBold() {
+    console.log("set bold " + this.bold)
     if (this.bold)
     {
       (document.getElementById('textarea1') as HTMLInputElement).style.fontWeight = "bold";
@@ -127,8 +144,9 @@ export class ToolBarComponent implements OnInit {
   }
 
   BoldPress() {
-      this.bold = !this.bold;
-      this.http.post('http://localhost:5000/tool-box', {'bold': this.bold}).subscribe(data => {});
+      //this.bold = !this.bold;
+      var bold = this.data.changeBold();
+      this.http.post('http://localhost:5000/tool-box/' + this.filename, {'bold': bold}).subscribe(data => {});
   }
 
   ItalicPress() {
