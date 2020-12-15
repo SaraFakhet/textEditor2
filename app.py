@@ -69,7 +69,7 @@ def loadFile(filename):
 
 @app.route('/save', methods = ['POST'])
 def save():
-    new_file = Files(filename='bibi', text='mémarshwesh')
+    new_file = Files(filename='bibi', text='mémarshwesdh')
     print(new_file)
 
     # Push dans la DB le open file qui a le nom filename
