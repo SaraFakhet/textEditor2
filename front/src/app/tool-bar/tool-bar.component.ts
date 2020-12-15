@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck, KeyValueDiffers, } from '@angular/core';
 import Pusher, { Channel } from 'pusher-js';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from "../data.service";
@@ -21,20 +21,37 @@ export class ToolBarComponent implements OnInit {
 
   pusher: Pusher;
   channel: Channel;
+  differ: any;
 
   pseudo: string;
   filename: string;
 
-  constructor(private http: HttpClient, private data: DataService) { }
+  constructor(private http: HttpClient, private data: DataService, private differs: KeyValueDiffers) { }
 
   ngOnInit() {
         this.data.currentPseudo.subscribe(pseudo => this.pseudo = pseudo);
         this.data.currentFilename.subscribe(filename => this.filename = filename);
         this.data.currentChannel.subscribe(channel => this.channel = channel);
+        this.data.currentBold.subscribe(bold => this.bold = bold);
+        this.differ = this.differs.find({}).create();
   }
 
-  setBold(data:Boolean) {
-    this.bold=(data);
+  ngDoCheck() {
+    const change = this.differ.diff(this);
+    if (change) {
+      change.forEachChangedItem(item => {
+        console.log('item changed', item);
+        if (item.key === "bold")
+          //console.log("ici " + this.bold)
+          this.setBold();
+      });
+    } else {
+      
+    }
+  }
+
+  setBold() {
+    console.log("set bold " + this.bold)
     if (this.bold)
     {
       (document.getElementById('textarea1') as HTMLInputElement).style.fontWeight = "bold";
@@ -127,73 +144,74 @@ export class ToolBarComponent implements OnInit {
   }
 
   BoldPress() {
-      this.bold = !this.bold;
-      this.http.post('http://localhost:5000/tool-box', {'bold': this.bold}).subscribe(data => {});
+      //this.bold = !this.bold;
+      var bold = this.data.changeBold();
+      this.http.post('http://localhost:5000/tool-box/' + this.filename, {'bold': bold}).subscribe(data => {});
   }
 
   ItalicPress() {
     this.italic = !this.italic;
-    this.http.post('http://localhost:5000/tool-box', {'italic': this.italic}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'italic': this.italic}).subscribe(data => {});
   }
 
   UnderlinePress() {
     this.underline = !this.underline;
-    this.http.post('http://localhost:5000/tool-box', {'underline': this.underline}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'underline': this.underline}).subscribe(data => {});
   }
 
   LeftPress() {
     this.left = true;
     this.center = false;
     this.right = false;
-    this.http.post('http://localhost:5000/tool-box', {'align': 'left'}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'align': 'left'}).subscribe(data => {});
   }
 
   CenterPress() {
     this.center = true;
     this.left = false;
     this.right = false;
-    this.http.post('http://localhost:5000/tool-box', {'align': 'center'}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'align': 'center'}).subscribe(data => {});
   }
 
   RightPress() {
     this.right = true;
     this.center = false;
     this.left = false;
-    this.http.post('http://localhost:5000/tool-box', {'align':'right'}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'align':'right'}).subscribe(data => {});
   }
 
   IncreasePress() {
     this.fontSize += 1;
-    this.http.post('http://localhost:5000/tool-box', {'fontSize':this.fontSize}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'fontSize':this.fontSize}).subscribe(data => {});
   }
 
   DecreasePress() {
     this.fontSize -= 1;
-    this.http.post('http://localhost:5000/tool-box', {'fontSize':this.fontSize}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'fontSize':this.fontSize}).subscribe(data => {});
   }
 
   SansSerifPress() {
     this.fontFamily = "Sans-Serif"
-    this.http.post('http://localhost:5000/tool-box', {'fontFamily':this.fontFamily}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'fontFamily':this.fontFamily}).subscribe(data => {});
   }
 
   SerifPress() {
     this.fontFamily = "Serif"
-    this.http.post('http://localhost:5000/tool-box', {'fontFamily':this.fontFamily}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'fontFamily':this.fontFamily}).subscribe(data => {});
   }
 
   MonospacePress() {
     this.fontFamily = "Monospace"
-    this.http.post('http://localhost:5000/tool-box', {'fontFamily':this.fontFamily}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'fontFamily':this.fontFamily}).subscribe(data => {});
   }
 
   FantasyPress() {
     this.fontFamily = "Fantasy"
-    this.http.post('http://localhost:5000/tool-box', {'fontFamily':this.fontFamily}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'fontFamily':this.fontFamily}).subscribe(data => {});
   }
 
   CursivePress() {
     this.fontFamily = "Cursive"
-    this.http.post('http://localhost:5000/tool-box', {'fontFamily':this.fontFamily}).subscribe(data => {});
+    this.http.post('http://localhost:5000/tool-box/' + this.filename, {'fontFamily':this.fontFamily}).subscribe(data => {});
   }
 }

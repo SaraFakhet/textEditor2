@@ -16,6 +16,27 @@ export class DataService {
   private textSource = new BehaviorSubject<string>('');
   currentText = this.textSource.asObservable();
 
+  private bold = new BehaviorSubject<boolean>(false);
+  currentBold = this.bold.asObservable();
+
+  private italic = new BehaviorSubject<boolean>(false);
+  currentItalic = this.italic.asObservable();
+
+  private underline = new BehaviorSubject<boolean>(false);
+  currentUnderline = this.underline.asObservable();
+
+  private left = new BehaviorSubject<boolean>(true);
+  currentLeft = this.left.asObservable();
+
+  private center = new BehaviorSubject<boolean>(false);
+  currentCenter = this.center.asObservable();
+
+  private right = new BehaviorSubject<boolean>(false);
+  currentRight = this.right.asObservable();
+
+  /*private fontFamily:String = "sans-serif";
+  private fontSize:any = 14;
+*/
   private pusher: Pusher;
   private channelSource;
   currentChannel;
@@ -35,21 +56,29 @@ export class DataService {
     this.channelSource.next(this.pusher.subscribe(filename));
     this.channelSource.value.bind('text-box', function(data) {
       this.textSource.next(data['body']);
-      //this.text=(data['body']);
       if (data['bold'] != undefined)
-      this.setBold(data['bold']);
+        this.bold.next(data['bold']);
+      //this.setBold(data['bold']);
       if (data['italic'] != undefined)
-        this.setItalic(data['italic']);
+        this.italic.next(data['italic']);
+        //this.setItalic(data['italic']);
       if (data['underline'] != undefined)
-        this.setUnderline(data['underline']);
+        this.underline.next(data['underline']);
+        //this.setUnderline(data['underline']);
       if (data['align'] != undefined)
       {
-        if (data['align'] == 'left')
-          this.setLeft();
+        if (data['align'] == 'left') {
+          this.left.next(true);
+          this.center.next(false);
+          this.right.next(false);
+          //this.setLeft();
+        }
         if (data['align'] == 'center')
-          this.setCenter();
+          this.center.next(true);
+          //this.setCenter();
         if (data['align'] == 'right')
-          this.setRight();
+          this.right.next(true);
+          //this.setRight();
       }
       if (data['fontSize'] != undefined)
         this.setFontSize(data['fontSize']);
@@ -70,5 +99,11 @@ export class DataService {
   changeText(text: string) {
     //console.log("change file name to : " + filename);
     this.textSource.next(text);
+  }
+
+  changeBold() {
+    const bool = !this.bold.value;
+    this.bold.next(bool);
+    return bool;
   }
 }
