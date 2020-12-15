@@ -119,8 +119,7 @@ with app.test_request_context():
     print(url_for('profile', username='John Doe'))
 
 # run Flask app in debug mode
-port = int(os.environ.get('PORT', 5000))
-app.run(host='0.0.0.0', port=port)
+app.run()
 
 #app.run(debug=True)
 
