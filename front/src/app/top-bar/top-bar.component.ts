@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Channel } from 'pusher-js';
+import { VirtualTimeScheduler } from 'rxjs';
 import { DataService } from "../data.service";
 
 @Component({
@@ -11,18 +13,27 @@ import { DataService } from "../data.service";
 export class TopBarComponent implements OnInit {
 
   pseudo: string;
+  fileName: string;
+  channel: Channel;
 
   constructor(private data: DataService) { }
 
-  fileName:String = "document1";
-
   ngOnInit() {
     this.data.currentPseudo.subscribe(pseudo => this.pseudo = pseudo);
+    this.data.currentFilename.subscribe(fileName => this.fileName = fileName);
+    this.data.currentChannel.subscribe(channel => this.channel = channel);
   }
 
-  onSubmit(form: NgForm) {
+  onSubmitLogin(form: NgForm) {
     this.data.changePseudo(form.value);
     this.closeLogin();
+    this.openFilename();
+  }
+
+  onSubmitFilename(form: NgForm) {
+    this.data.changeFilename(form.value);
+    this.data.changeChannel(form.value);
+    this.closeFilename();
   }
 
   openSaveFiles() { 
@@ -35,7 +46,7 @@ export class TopBarComponent implements OnInit {
 
   closeSaveFiles() {
     (document.querySelector('.bg-modal') as HTMLInputElement).style.display = "none";
-    this.fileName = (document.getElementById('submitSaveInput') as HTMLInputElement).value;
+    this.data.changeFilename((document.getElementById('submitSaveInput') as HTMLInputElement).value);
     console.log("filename : " + this.fileName);
   }
 
@@ -57,5 +68,13 @@ export class TopBarComponent implements OnInit {
 
   closeLogin() {
     (document.querySelector('.bg-modal-login') as HTMLInputElement).style.display = "none";
+  }
+
+  openFilename() {
+    (document.querySelector('.bg-modal-filename') as HTMLInputElement).style.display = "flex";
+  }
+
+  closeFilename() {
+    (document.querySelector('.bg-modal-filename') as HTMLInputElement).style.display = "none";
   }
 }

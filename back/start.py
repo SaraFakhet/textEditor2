@@ -69,6 +69,8 @@ def openFile(filename):
 
 @app.route('/text-box/<file>', methods = ['POST'])
 def textBox(file):
+    print(file)
+    print(request.data)
     data = json.loads(request.data) # load JSON data from request
     pusher_client.trigger(file, 'text-box', data)
 
@@ -92,8 +94,8 @@ def profile(username):
 
 with app.test_request_context():
     print(url_for('index'))
-    print(url_for('textBox'))
-    print(url_for('toolBox'))
+    #print(url_for('textBox'))
+    #print(url_for('toolBox'))
     print(url_for('profile', username='John Doe'))
 
 # run Flask app in debug mode
