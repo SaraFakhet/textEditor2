@@ -13,8 +13,9 @@ import psycopg2
 app = Flask(__name__)
 CORS(app)
 
+postgres://lstjhnbldzlhii:9636d9938d4215d06f268862ab7d4dbc645f3bdede8e1f9281ae128eccb174a1@ec2-176-34-114-78.eu-west-1.compute.amazonaws.com:5432/de9ihpsvb026re
 
-con = psycopg2.connect(dbname='editor2database', user='postgres', host='localhost', password='1234')
+con = psycopg2.connect(dbname='de9ihpsvb026re', user='lstjhnbldzlhii', host='ec2-176-34-114-78.eu-west-1.compute.amazonaws.com', password='9636d9938d4215d06f268862ab7d4dbc645f3bdede8e1f9281ae128eccb174a1')
 cur = con.cursor()
 con.commit()
 
