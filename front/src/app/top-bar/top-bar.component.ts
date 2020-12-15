@@ -9,15 +9,23 @@ export class TopBarComponent implements OnInit {
 
   constructor() { }
 
+  fileName:String = "document1";
+
   ngOnInit() {
   }
 
-  openSaveFiles() {
+  openSaveFiles() { 
     (document.querySelector('.bg-modal') as HTMLInputElement).style.display = "flex";
+  }
+
+  closeUnsaveFiles() {
+    (document.querySelector('.bg-modal') as HTMLInputElement).style.display = "none";
   }
 
   closeSaveFiles() {
     (document.querySelector('.bg-modal') as HTMLInputElement).style.display = "none";
+    this.fileName = (document.getElementById('submitSaveInput') as HTMLInputElement).value;
+    console.log("filename : " + this.fileName);
   }
 
   openSelectFiles() {
