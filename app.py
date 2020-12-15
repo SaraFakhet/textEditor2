@@ -119,7 +119,10 @@ with app.test_request_context():
     print(url_for('profile', username='John Doe'))
 
 # run Flask app in debug mode
-app.run(debug=True)
+port = int(os.environ.get('PORT', 5000))
+app.run(host='0.0.0.0', port=port)
+
+#app.run(debug=True)
 
 pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
 
