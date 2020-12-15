@@ -56,7 +56,7 @@ def getName(f):
 
 @app.route('/list-open-files')
 def getListOpenFiles():
-    return  jsonify({ "data": list_open_files })
+    return  jsonify({ "data": list(map(lambda f: f.toJSON(), list_open_files))})
 
 
 @app.route('/load-file/<filename>')
