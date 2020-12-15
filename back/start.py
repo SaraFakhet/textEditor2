@@ -19,6 +19,7 @@ cur = con.cursor()
 con.commit()
 
 cur.execute("create table files (id serial primary key, filename varchar(255) not null, text varchar(1000), bold bool, italic bool, underline bool, alignement varchar(10), font varchar(100));")
+cur.execute("create table version (filename varchar(255) not null, text varchar(1000), created_at TIMESTAMP, user varchar(100) not null)")  # FIXME a tester
 
 # configure pusher object
 pusher_client = Pusher(
@@ -96,6 +97,8 @@ def textBox(file):
             cur.execute( \
                 "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
                 str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "')")
+
+            cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data.user + "')") # FIXME a tester
             con.commit()
 
             break
@@ -107,7 +110,21 @@ def textBox(file):
 def toolBox(file):
     data = json.loads(request.data) # load JSON data from request
     pusher_client.trigger(file, 'tool-box', data)
+
+    for f in list_open_files:
+        if (f.filename == file):
+            keys = data.keys()
+            f[keys[0]] = data[keys[0]] # FIXME wallah je suis pas sur que ça marche comme ça
+            break
+
     return jsonify(data)
+
+
+@app.route('/versions/<file>')
+def getVersions(file):
+    cur.execute("SELECT * FROM version WHERE filename ISLIKE '" + file + "' ORDER BY created_at ASC")
+    records = cur.fetchall()
+    return records
 
 @app.route('/user/<username>')
 def profile(username):
