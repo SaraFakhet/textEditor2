@@ -53,7 +53,7 @@ def getName(f):
 
 @app.route('/list-open-files')
 def getListOpenFiles():
-    return list_open_files
+    return  jsonify({ "data": list_open_files })
 
 
 @app.route('/load-file/<filename>')
@@ -61,7 +61,7 @@ def loadFile(filename):
     for f in list_open_files:
         if (f.filename == filename):
             return jsonify(f)
-    return None
+    return '200'
 
 
 
@@ -70,7 +70,6 @@ def save():
     new_file = Files(filename='bibi', text='mémarshwesh')
     print(new_file)
 
-    print("jofoisdfoisdofisdiofsdif")
     # Push dans la DB le open file qui a le nom filename
     return '200'
 
@@ -80,7 +79,7 @@ def save():
 def openFile(filename):
     f = Files(filename)
     list_open_files.append(f) # use files class
-    return None
+    return '200'
 
 
 @app.route('/text-box/<file>', methods = ['POST'])
