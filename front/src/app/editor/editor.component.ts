@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import Pusher, { Channel } from 'pusher-js';
 import { NgForm } from '@angular/forms';
+import { DataService } from "../data.service";
 
 @Component({
   selector: 'app-editor',
@@ -17,31 +18,21 @@ export class EditorComponent implements OnInit {
   @ViewChild('contactForm') contactForm: NgForm;
   pusher: Pusher;
   channel: Channel;
+  filename: string;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private data: DataService) { 
    }
 
   ngOnInit() {
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-    this.pusher = new Pusher('e0f07ea56123ef7bab7b', {
-      cluster: 'eu'
-    });
-    this.channel = this.pusher.subscribe('editor');
-  }
-
-  ngAfterViewInit(): void {
-    this.channel.bind('text-box', function(data) {
-    this.text=(data['body']);
-      //console.log(this.text);
-    }, this);
+    this.data.currentFilename.subscribe(filename => this.filename = filename);
+    this.data.currentChannel.subscribe(channel => this.channel = channel);
+    this.data.currentText.subscribe(text => this.text = text);
   }
 
   keyPress(event) {
-    this.text = event;
+    this.data.changeText(event);
     if (this.text != '') {
-      //console.log(event);
-      this.http.post('http://localhost:5000/text-box', {'body': event}).subscribe(data => {});
+      this.http.post('http://localhost:5000/text-box/' + this.filename, {'body': event}).subscribe(data => {});
       //this.printLoginRoute();
     }
   }

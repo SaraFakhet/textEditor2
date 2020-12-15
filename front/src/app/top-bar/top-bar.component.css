@@ -44,6 +44,11 @@ h1,
     color:white;
 }
 
+.loginFilename {
+    font-size: 32pt;
+    color:white;
+}
+
 .button {
     background-color: #555;
     border: 2px solid white;
@@ -194,7 +199,19 @@ input {
     height: 100%;
     position: fixed;
     top: 0;
-    display: none; /*change to flex*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.bg-modal-filename {
+    background-color: #0f771d;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 1;

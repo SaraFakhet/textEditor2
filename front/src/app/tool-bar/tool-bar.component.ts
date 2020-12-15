@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Pusher, { Channel } from 'pusher-js';
 import { HttpClient } from '@angular/common/http';
+import { DataService } from "../data.service";
 
 @Component({
   selector: 'app-tool-bar',
@@ -21,16 +22,15 @@ export class ToolBarComponent implements OnInit {
   pusher: Pusher;
   channel: Channel;
 
-  constructor(private http: HttpClient) { }
+  pseudo: string;
+  filename: string;
 
-  
+  constructor(private http: HttpClient, private data: DataService) { }
+
   ngOnInit() {
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
-        this.pusher = new Pusher('e0f07ea56123ef7bab7b', {
-          cluster: 'eu'
-        });
-        this.channel = this.pusher.subscribe('editor');
+        this.data.currentPseudo.subscribe(pseudo => this.pseudo = pseudo);
+        this.data.currentFilename.subscribe(filename => this.filename = filename);
+        this.data.currentChannel.subscribe(channel => this.channel = channel);
   }
 
   setBold(data:Boolean) {
@@ -124,35 +124,6 @@ export class ToolBarComponent implements OnInit {
       (document.getElementById('fontType') as HTMLInputElement).innerHTML = value;
       (document.getElementById('fontType') as HTMLInputElement).style.fontFamily = value;
       (document.getElementById('textarea1') as HTMLInputElement).style.fontFamily = value;
-  }
-
-
-  
-  ngAfterViewInit(): void {
-    this.channel.bind('tool-box', function(data) {
-
-    if (data['bold'] != undefined)
-      this.setBold(data['bold']);
-    if (data['italic'] != undefined)
-      this.setItalic(data['italic']);
-    if (data['underline'] != undefined)
-      this.setUnderline(data['underline']);
-    if (data['align'] != undefined)
-    {
-      if (data['align'] == 'left')
-        this.setLeft();
-      if (data['align'] == 'center')
-        this.setCenter();
-      if (data['align'] == 'right')
-        this.setRight();
-    }
-    if (data['fontSize'] != undefined)
-      this.setFontSize(data['fontSize']);
-    if (data['fontFamily'] != undefined)
-      this.setFontFamily(data['fontFamily']);
-      
-    }, this);
-    
   }
 
   BoldPress() {
