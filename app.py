@@ -119,7 +119,9 @@ with app.test_request_context():
     print(url_for('profile', username='John Doe'))
 
 # run Flask app in debug mode
-app.run()
+if __name__ == "__main__":
+    print("tzoerzoirjizr")
+    app.run()
 
 #app.run(debug=True)
 
