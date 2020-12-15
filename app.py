@@ -53,7 +53,7 @@ def getName(f):
 
 @app.route('/list-open-files')
 def getListOpenFiles():
-    return jsonify(list_open_files)
+    return list_open_files
 
 
 @app.route('/load-file/<filename>')
@@ -80,6 +80,7 @@ def save():
 def openFile(filename):
     f = Files(filename)
     list_open_files.append(f) # use files class
+    return None
 
 
 @app.route('/text-box/<file>', methods = ['POST'])
