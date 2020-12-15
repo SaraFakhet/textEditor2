@@ -4,11 +4,21 @@ from flask import Flask, request, jsonify, url_for
 from markupsafe import escape
 from pusher import Pusher
 import json
+import os
 from flask_cors import CORS
+import psycopg2
+
 
 # create flask app
 app = Flask(__name__)
 CORS(app)
+
+
+con = psycopg2.connect(dbname='editor2database', user='postgres', host='localhost', password='1234')
+cur = con.cursor()
+con.commit()
+
+cur.execute("create table files (id serial primary key, filename varchar(255) not null, text varchar(1000), bold bool, italic bool, underline bool, alignement varchar(10), font varchar(100));")
 
 # configure pusher object
 pusher_client = Pusher(
@@ -34,6 +44,7 @@ class Files:
         self.font = font
 
 
+
 list_open_files = []
 
 
@@ -54,11 +65,16 @@ def loadFile(filename):
     return None
 
 
-'''
-@app.route('/save/<filename>')
-def save(filename):
+
+@app.route('/save', methods = ['POST'])
+def save():
+    new_file = Files(filename='bibi', text='mémarshwesh')
+    print(new_file)
+
+    print("jofoisdfoisdofisdiofsdif")
     # Push dans la DB le open file qui a le nom filename
-'''
+    return '200'
+
 
 
 @app.route('/open-files/<filename>')
@@ -77,6 +93,11 @@ def textBox(file):
     for f in list_open_files:
         if (f.filename == file):
             f.text = data
+            cur.execute( \
+                "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
+                str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "')")
+            con.commit()
+
             break
 
     return jsonify(data)
@@ -102,3 +123,4 @@ with app.test_request_context():
 app.run(debug=True)
 
 pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
+
