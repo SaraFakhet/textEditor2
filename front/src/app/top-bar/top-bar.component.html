@@ -1,4 +1,4 @@
-<h1>Nav Bar</h1>
+<h1>{{ pseudo.value }}</h1>
 <a class="icon-bar" (click)="openSelectFiles()">
     <div class="icon-text-bar">
         <i class="material-icons">search</i>Ouvrir
@@ -56,9 +56,9 @@
 </div>
 
 <div class="bg-modal-login">
-        <form action="">
+        <form (ngSubmit)="onSubmit(pseudo)">
             <div class="popupTitle loginTitle">Bienvenue !</div>
-            <input type="text" id="loginInput" placeholder="Pseudo">
-            <a href="#" id="loginButton" class="button">Valider</a>
+            <input type="text" id="loginInput" placeholder="Pseudo" name="pseudo" ngModel required #pseudo="ngModel">
+            <button id="loginButton" type="submit" class="button">Valider</button>
         </form>
 </div>

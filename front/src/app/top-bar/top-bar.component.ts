@@ -1,15 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { DataService } from "../data.service";
 
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.css']
 })
+
 export class TopBarComponent implements OnInit {
 
-  constructor() { }
+  pseudo: string;
+
+  constructor(private data: DataService) { }
 
   ngOnInit() {
+    this.data.currentPseudo.subscribe(pseudo => this.pseudo = pseudo);
+  }
+
+  onSubmit(form: NgForm) {
+    this.data.changePseudo(form.value);
+    this.closeLogin();
   }
 
   openSaveFiles() {
@@ -34,5 +45,9 @@ export class TopBarComponent implements OnInit {
 
   closeRemoveFiles() {
     (document.querySelector('.bg-modal3') as HTMLInputElement).style.display = "none";
+  }
+
+  closeLogin() {
+    (document.querySelector('.bg-modal-login') as HTMLInputElement).style.display = "none";
   }
 }

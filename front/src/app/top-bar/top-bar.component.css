@@ -194,7 +194,7 @@ input {
     height: 100%;
     position: fixed;
     top: 0;
-    display: none; /*change to flex*/
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1;
