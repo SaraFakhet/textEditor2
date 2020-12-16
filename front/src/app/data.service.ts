@@ -40,6 +40,9 @@ export class DataService {
   private fontFamily = new BehaviorSubject<string>('sans-serif');
   currentFontFamily = this.fontSize.asObservable();
 
+  private historyVersionning = new BehaviorSubject<Object>([]);
+  currentHistoryVersionning = this.historyVersionning.asObservable();
+
   private pusher: Pusher;
   private channelSource;
   currentChannel;
@@ -60,8 +63,13 @@ export class DataService {
     this.textSource.next(data['body']);
     }, this);
 
-    this.channelSource.value.bind('tool-box', function(data) {
+    this.channelSource.value.bind('history', function(data) {
       console.log(data);
+      
+    })
+
+    this.channelSource.value.bind('tool-box', function(data) {
+      //console.log(data);
       if (data['bold'] != undefined) {
         this.setBold(data['bold']);
       }
@@ -199,5 +207,17 @@ export class DataService {
     (document.getElementById('fontType') as HTMLInputElement).innerHTML = value;
     (document.getElementById('fontType') as HTMLInputElement).style.fontFamily = value;
     (document.getElementById('textarea1') as HTMLInputElement).style.fontFamily = value;
+  }
+
+  setHistoryVersionning(value: any) {
+    this.historyVersionning.next(value);
+    (document.getElementById('versio_grid') as HTMLInputElement).innerHTML = '';
+    value.forEach(history => {
+      (document.getElementById('versio_grid') as HTMLInputElement).innerHTML += '<div>\
+      <div class="buffer">La vie cest la beauté dun petit moment avec sa famille, même si on aime pas sa soeur parce que cest une conasse</div> \
+      <div style="font-size: 12px; width: 100%;">Modifié par : user</div> \
+      <div style="font-size: 12px; width: 100%;">à : </div> \
+  </div>';
+    });
   }
 }
