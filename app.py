@@ -149,7 +149,6 @@ def toolBox(file):
 def getVersions(file):
     cur.execute("SELECT * FROM version WHERE filename LIKE '" + file + "' ORDER BY created_at ASC")
     records = cur.fetchall()
-    print("records : " + jsonify(records))
     return jsonify(records)
 
 @app.route('/user/<username>')
