@@ -124,6 +124,7 @@ resetFile() {
       this.data.setUnderline(false);
       this.data.setLeft();
       this.data.setFontSize(14);
+      (document.getElementById('versio_grid') as HTMLInputElement).innerHTML = '';
       this.closeFilename();
       this.closeSelectFiles();
   }
