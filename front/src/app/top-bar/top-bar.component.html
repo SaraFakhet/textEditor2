@@ -66,6 +66,14 @@
 <div class="bg-modal-filename">
     <form (ngSubmit)="onSubmitFilename(filename)" style="border: 1px solid white; padding: 30px; border-radius: 40px;">
         <div class="popupTitle loginFilename">Choisissez un fichier</div>
+
+        <div *ngIf="allFiles !== undefined">
+            <div *ngFor="let file of allFiles.data">
+                <a (click)="clickFilename(file.filename)">
+                    {{ file.filename }}
+                </a>
+            </div>
+        </div>
         <input type="text" placeholder="Filename" name="filename" ngModel required #filename="ngModel">
         <button id="filenameButton" type="submit" class="button" style="margin-left: 150px;">Valider</button>
     </form>
