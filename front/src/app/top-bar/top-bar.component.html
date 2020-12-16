@@ -35,8 +35,8 @@
                 <div class="doc_grid" id="grid">
                     <div *ngIf="allFiles !== undefined">
                         <div *ngFor="let file of allFiles.data">
-                            <a (click)="clickFilename(file.filename)">
-                                {{ file.filename }}
+                            <a style="font-size:large;" (click)="clickFilename(file.filename)">
+                                📝{{ file.filename }}
                             </a>
                         </div>
                     </div>
@@ -69,16 +69,17 @@
 
 <div class="bg-modal-filename">
     <form (ngSubmit)="onSubmitFilename(filename)" style="border: 1px solid white; padding: 30px; border-radius: 40px;">
-        <div class="popupTitle loginFilename">Choisissez un fichier</div>
-
+        <div class="popupTitle loginFilename" style="text-decoration: bold;">Choisissez un fichier : </div>
         <div *ngIf="allFiles !== undefined">
             <div *ngFor="let file of allFiles.data">
-                <a (click)="clickFilename(file.filename)">
-                    {{ file.filename }}
+                <a style="color:#ffffff; font-size: x-large;" (click)="clickFilename(file.filename)">
+                    📝{{ file.filename }}
                 </a>
             </div>
         </div>
+        <br>
+        <div class="popupTitle loginFilename" style="text-decoration: bold;">Créer un fichier : </div>
         <input type="text" placeholder="Filename" name="filename" ngModel required #filename="ngModel">
-        <button id="filenameButton" type="submit" class="button" style="margin-left: 150px;">Valider</button>
+        <button id="filenameButton" type="submit" class="button" style="margin-left: 150px; background-color: #0f771d;">Valider</button>
     </form>
 </div>
