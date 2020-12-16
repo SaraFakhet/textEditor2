@@ -81,7 +81,6 @@ def save():
     return '200'
 
 
-
 @app.route('/open-files/<filename>')
 def openFile(filename):
     for f in list_open_files:
