@@ -4,6 +4,7 @@ import { Channel } from 'pusher-js';
 import { VirtualTimeScheduler } from 'rxjs';
 import { DataService } from "../data.service";
 import { HttpClient } from '@angular/common/http';
+import baseUrl from '../baseUrl';
 
 export interface AllFiles {
   data: Array<[{
@@ -58,12 +59,12 @@ export class TopBarComponent implements OnInit {
     this.data.changeFilename(form.value);
     this.data.changeChannel(form.value);
     this.closeFilename();
-    this.http.get('http://localhost:5000/open-files/' + form.value).subscribe(data => {});
+    this.http.get(baseUrl.URL + '/open-files/' + form.value).subscribe(data => {});
   }
 
   clickFilename(filename: string) {
     console.log("file name : " + filename)
-    this.http.get<File>('http://localhost:5000/load-file/' + filename).toPromise().then(data => {
+    this.http.get<File>(baseUrl.URL + '/load-file/' + filename).toPromise().then(data => {
       console.log("alignement " + data.alignement)
       this.data.changeText(data.text);
       this.data.setBold(data.bold);
@@ -104,11 +105,11 @@ export class TopBarComponent implements OnInit {
     var filename = (document.getElementById('submitSaveInput') as HTMLInputElement).value;
     this.data.changeFilename(filename);
     this.data.changeChannel(filename);
-    this.http.get('http://localhost:5000/open-files/' + filename).subscribe(data => {});
+    this.http.get(baseUrl.URL + '/open-files/' + filename).subscribe(data => {});
   }
 
   openSelectFiles() {
-    let response = this.http.get<AllFiles>('http://localhost:5000/list-open-files').toPromise().then(data => {
+    let response = this.http.get<AllFiles>(baseUrl.URL + '/list-open-files').toPromise().then(data => {
       this.closeLogin();
       this.allFiles = data;
       console.log(JSON.stringify(this.allFiles));
@@ -133,7 +134,7 @@ export class TopBarComponent implements OnInit {
   }
 
   openFilename() {
-    let response = this.http.get<AllFiles>('http://localhost:5000/list-open-files').toPromise().then(data => {
+    let response = this.http.get<AllFiles>(baseUrl.URL + '/list-open-files').toPromise().then(data => {
       this.closeLogin();
       this.allFiles = data;
       console.log(JSON.stringify(this.allFiles));

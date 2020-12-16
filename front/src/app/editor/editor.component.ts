@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import Pusher, { Channel } from 'pusher-js';
 import { NgForm } from '@angular/forms';
 import { DataService } from "../data.service";
+import baseUrl from '../baseUrl';
 
 @Component({
   selector: 'app-editor',
@@ -35,20 +36,20 @@ export class EditorComponent implements OnInit {
   keyPress(event) {
     this.data.changeText(event);
     if (this.text != '') {
-      this.http.post('http://localhost:5000/text-box/' + this.filename, {'body': event, 'user': this.pseudo}).subscribe(data => {});
+      this.http.post(baseUrl.URL + '/text-box/' + this.filename, {'body': event, 'user': this.pseudo}).subscribe(data => {});
       //this.printLoginRoute();
     }
   }
 
   /*
   getHistory(filename) {
-    history = this.http.get('http://localhost:5000/versions/' + this.filename).subscribe(data => {});
+    history = this.http.get(baseUrl.URL + '/versions/' + this.filename).subscribe(data => {});
   }
   */
 
   printLoginRoute() {
     console.log('test');
-    this.http.get('http://localhost:5000/').subscribe(data => {
+    this.http.get(baseUrl.URL).subscribe(data => {
       this.reponse = data;
   }
     );
