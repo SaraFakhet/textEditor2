@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Channel } from 'pusher-js';
 import { VirtualTimeScheduler } from 'rxjs';
 import { DataService } from "../data.service";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-top-bar',
@@ -16,7 +17,7 @@ export class TopBarComponent implements OnInit {
   fileName: string;
   channel: Channel;
 
-  constructor(private data: DataService) { }
+  constructor(private data: DataService, private http: HttpClient) { }
 
   ngOnInit() {
     this.data.currentPseudo.subscribe(pseudo => this.pseudo = pseudo);
@@ -34,6 +35,7 @@ export class TopBarComponent implements OnInit {
     this.data.changeFilename(form.value);
     this.data.changeChannel(form.value);
     this.closeFilename();
+    this.http.get('http://localhost:5000/open-files/' + form.value).subscribe(data => {});
   }
 
   openSaveFiles() { 
@@ -46,8 +48,9 @@ export class TopBarComponent implements OnInit {
 
   closeSaveFiles() {
     (document.querySelector('.bg-modal') as HTMLInputElement).style.display = "none";
-    this.data.changeFilename((document.getElementById('submitSaveInput') as HTMLInputElement).value);
-    console.log("filename : " + this.fileName);
+    var filename = (document.getElementById('submitSaveInput') as HTMLInputElement).value;
+    this.data.changeFilename(filename);
+    //console.log("filename : " + this.fileName);
   }
 
   openSelectFiles() {
