@@ -137,10 +137,10 @@ def toolBox(file):
             elif key == 'underline':
                 f.underline = data[key]
                 cur.execute("UPDATE files SET underline = '" + str(data[key]) + "' WHERE filename LIKE '" + file + "'")
-            elif key == 'alignement':
+            elif key == 'align':
                 f.alignement = data[key]
                 cur.execute("UPDATE files SET alignement = '" + data[key] + "' WHERE filename LIKE '" + file + "'")
-            elif key == 'font':
+            elif key == 'fontFamily':
                 f.font = data[key]
                 cur.execute("UPDATE files SET font = '" + data[key] + "' WHERE filename LIKE '" + file + "'")
             con.commit()

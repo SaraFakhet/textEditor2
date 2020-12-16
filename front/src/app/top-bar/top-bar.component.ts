@@ -17,6 +17,16 @@ export interface AllFiles {
   }]>
 }
 
+export interface File {
+    alignement: string,
+    bold: boolean,
+    filename: string,
+    font: string,
+    italic: boolean,
+    text: string,
+    underline: boolean
+}
+
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
@@ -53,11 +63,32 @@ export class TopBarComponent implements OnInit {
 
   clickFilename(filename: string) {
     console.log("file name : " + filename)
-    this.data.changeFilename(filename);
-    this.data.changeChannel(filename);
-    this.closeFilename();
-    this.closeSelectFiles();
-    this.http.get('http://localhost:5000/open-files/' + filename).subscribe(data => {});
+    this.http.get<File>('http://localhost:5000/load-file/' + filename).toPromise().then(data => {
+      console.log("alignement " + data.alignement)
+      this.data.changeText(data.text);
+      this.data.setBold(data.bold);
+      this.data.setFontFamily(data.font);
+      this.data.setItalic(data.italic);
+      this.data.setUnderline(data.underline);
+      switch (data.alignement) {
+        case 'left':
+          this.data.setLeft();
+          break;
+        case 'center':
+          this.data.setCenter();
+          break;
+        case 'right':
+          this.data.setRight();
+          break;
+        default:
+          this.data.setLeft();
+          break;
+      }
+      this.data.changeFilename(filename);
+      this.data.changeChannel(filename);
+      this.closeFilename();
+      this.closeSelectFiles();
+    });
   }
 
   openSaveFiles() { 
