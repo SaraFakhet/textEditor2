@@ -13,8 +13,12 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+<<<<<<< HEAD:back/start.py
 """
 con = psycopg2.connect(dbname='editor2database', user='postgres', host='localhost', password='1234')
+=======
+con = psycopg2.connect(dbname='de9ihpsvb026re', user='lstjhnbldzlhii', host='ec2-176-34-114-78.eu-west-1.compute.amazonaws.com', password='9636d9938d4215d06f268862ab7d4dbc645f3bdede8e1f9281ae128eccb174a1')
+>>>>>>> develop:app.py
 cur = con.cursor()
 con.commit()
 
@@ -44,6 +48,8 @@ class Files:
         self.alignement = alignement
         self.font = font
 
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.dict, sort_keys=True, indent=4)
 
 
 list_open_files = []
@@ -55,7 +61,7 @@ def getName(f):
 
 @app.route('/list-open-files')
 def getListOpenFiles():
-    return jsonify(list_open_files)
+    return  jsonify({ "data": list(map(lambda f: vars(f), list_open_files))})
 
 
 @app.route('/load-file/<filename>')
@@ -63,16 +69,15 @@ def loadFile(filename):
     for f in list_open_files:
         if (f.filename == filename):
             return jsonify(f)
-    return None
+    return '200'
 
 
 
 @app.route('/save', methods = ['POST'])
 def save():
-    new_file = Files(filename='bibi', text='mémarshwesh')
+    new_file = Files(filename='bibi', text='mémarshwesdh')
     print(new_file)
 
-    print("jofoisdfoisdofisdiofsdif")
     # Push dans la DB le open file qui a le nom filename
     return '200'
 
@@ -82,6 +87,7 @@ def save():
 def openFile(filename):
     f = Files(filename)
     list_open_files.append(f) # use files class
+    return '200'
 
 
 @app.route('/text-box/<file>', methods = ['POST'])
@@ -137,7 +143,11 @@ with app.test_request_context():
     print(url_for('profile', username='John Doe'))
 
 # run Flask app in debug mode
-app.run(debug=True)
+if __name__ == "__main__":
+    print("tzoerzoirjizr")
+    app.run()
+
+#app.run(debug=True)
 
 pusher_client.trigger('my-channel', 'my-event', {'message': 'hello world'})
 
