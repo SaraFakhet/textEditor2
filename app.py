@@ -65,7 +65,7 @@ def getListOpenFiles():
 def loadFile(filename):
     for f in list_open_files:
         if (f.filename == filename):
-            return jsonify(f)
+            return jsonify(vars(f))
     return '200'
 
 
