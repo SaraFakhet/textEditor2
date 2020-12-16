@@ -95,8 +95,8 @@ def openFile(filename):
     print("after : " + str(list_open_files))
 
     cur.execute( \
-        "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
-        str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "'," + f.fontsize + ")")
+        "INSERT INTO files (filename, text, bold, italic, underline, alignement, font, fontsize) VALUES ('" + f.filename + "', '" + f.text + "', " + \
+        str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "'," + str(f.fontsize) + ")")
     con.commit()
 
     return '200'
@@ -116,7 +116,7 @@ def textBox(file):
             cur.execute("UPDATE files SET text = '" + data['body'] + "' WHERE filename LIKE '" + file + "'")
             cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data['user'] + "')") # FIXME a tester
             con.commit()
-            pusher_client.trigger(file, 'version', { "filename": f.filename, "text": f.text,"date": datetime.datetime.now(), "user": data['user']})
+            pusher_client.trigger(file, 'version', { "filename": f.filename, "text": f.text,"date": datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f'), "user": data['user']})
             break
 
     return jsonify(data)
@@ -157,8 +157,11 @@ def toolBox(file):
 
 @app.route('/versions/<file>')
 def getVersions(file):
-    cur.execute("SELECT * FROM version WHERE filename LIKE '" + file + "' ORDER BY created_at ASC")
-    records = cur.fetchall()
+    rows_count = cur.execute("SELECT * FROM version WHERE filename LIKE '" + file + "' ORDER BY created_at ASC")
+    if rows_count != None and rows_count > 0:
+        records =  cur.fetchall()
+    else:
+        records = []
     return jsonify(records)
 
 @app.route('/user/<username>')
