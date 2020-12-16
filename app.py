@@ -18,7 +18,7 @@ cur = con.cursor()
 con.commit()
 
 cur.execute("create table if not exists files (id serial primary key, filename varchar(255) not null, text varchar(1000), bold bool, italic bool, underline bool, alignement varchar(10), font varchar(100));")
-#cur.execute("create table if not exists version (filename varchar(255) not null, text varchar(1000), created_at TIMESTAMP, user varchar(100) not null)")  # FIXME a tester
+cur.execute("create table if not exists version (filename varchar(255) not null, text varchar(1000), created_at TIMESTAMP, users varchar(100) not null)")  # FIXME a tester
 
 # configure pusher object
 pusher_client = Pusher(
@@ -122,25 +122,25 @@ def toolBox(file):
     pusher_client.trigger(file, 'tool-box', data)
 
     for f in list_open_files:
-        if (f.filename == file):
+        if f.filename == file:
             key = list(data.keys())[0]
 
             if key == 'bold':
                 f.bold = data[key]
-                #cur.execute("UPDATE files SET bold = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+                cur.execute("UPDATE files SET bold = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
             elif key == 'italic':
                 f.italic = data[key]
-                #cur.execute("UPDATE files SET italic = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+                cur.execute("UPDATE files SET italic = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
             elif key == 'underline':
                 f.underline = data[key]
-                #cur.execute("UPDATE files SET underline = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+                cur.execute("UPDATE files SET underline = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
             elif key == 'alignement':
                 f.alignement = data[key]
-                #cur.execute("UPDATE files SET alignement = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+                cur.execute("UPDATE files SET alignement = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
             elif key == 'font':
                 f.font = data[key]
-                #cur.execute("UPDATE files SET font = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
-
+                cur.execute("UPDATE files SET font = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+            con.commit()
             break
 
     return jsonify(data)
