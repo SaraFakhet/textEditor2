@@ -107,7 +107,7 @@ def textBox(file):
         if (f.filename == file):
             f.text = data['body']
 
-            cur.execute("UPDATE files SET text = '" + data['body'] + "' WHERE filename ISLIKE '" + file + "'")
+            cur.execute("UPDATE files SET text = '" + data['body'] + "' WHERE filename LIKE '" + file + "'")
             cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data.user + "')") # FIXME a tester
             con.commit()
             break
