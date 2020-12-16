@@ -83,7 +83,10 @@ def save():
 @app.route('/open-files/<filename>')
 def openFile(filename):
     f = Files(filename)
+    print("f " + f.filename)
+    print("before : " + str(list_open_files))
     list_open_files.append(f) # use files class
+    print("after : " + str(list_open_files))
 
     cur.execute( \
         "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
