@@ -91,10 +91,30 @@ export class TopBarComponent implements OnInit {
       this.data.changeFilename(filename);
       this.data.changeChannel(filename);
       this.data.setFontSize(data.fontsize);
+      this.http.get(baseUrl.URL + '/versions/' + filename).subscribe(data => {
+        this.setHistoryVersionning2(data);
+      });
       this.closeFilename();
       this.closeSelectFiles();
     });
   }
+
+
+setHistoryVersionning2(data: any) {
+  this.data.changeHistory(data);
+  (document.getElementById('versio_grid') as HTMLInputElement).innerHTML = '';
+  console.log('HISTORY DATA');
+  console.log(data);
+  data.forEach(history => {
+    (document.getElementById('versio_grid') as HTMLInputElement).innerHTML += '<div>\
+    <div style="border: 1px solid black; border-radius: 3px; height: 100px; overflow-wrap: anywhere; \
+    overflow: hidden; overflow-y: scroll; text-align: justify; font-size: 10px;">' + history[1] + '</div> \
+    <div style="font-size: 12px; width: 100%;">Modifié par : ' + history[3] + '</div> \
+    <div style="font-size: 12px; width: 100%;">à : ' + history[2] + '</div> \
+</div>'
+  });
+}
+
 
 resetFile() {
       this.data.changeText("");

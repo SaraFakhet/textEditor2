@@ -112,6 +112,10 @@ export class DataService {
     this.textSource.next(text);
   }
 
+  changeHistory(history: Object) {
+    this.historyVersionning.next(history);
+  }
+
   changeBold() {
     const bool = !this.bold.value;
     this.bold.next(bool);
@@ -212,11 +216,13 @@ export class DataService {
 
   setHistoryVersionning(value: any) {
     this.historyVersionning.next(value);
-      (document.getElementById('versio_grid') as HTMLInputElement).innerHTML += '<div>\
-      <div style="border: 1px solid black; border-radius: 3px; height: 100px; overflow-wrap: anywhere; \
-      overflow: hidden; overflow-y: scroll; text-align: justify; font-size: 10px;">' + value.text + '</div> \
-      <div style="font-size: 12px; width: 100%;">Modifié par : ' + value.user + '</div> \
-      <div style="font-size: 12px; width: 100%;">à : ' + value.date + '</div> \
-  </div>';
+    let new_history = '<div>\
+    <div style="border: 1px solid black; border-radius: 3px; height: 100px; overflow-wrap: anywhere; \
+    overflow: hidden; overflow-y: scroll; text-align: justify; font-size: 10px;">' + value.text + '</div> \
+    <div style="font-size: 12px; width: 100%;">Modifié par : ' + value.user + '</div> \
+    <div style="font-size: 12px; width: 100%;">à : ' + value.date + '</div> \
+</div>';
+    new_history += (document.getElementById('versio_grid') as HTMLInputElement).innerHTML;
+      (document.getElementById('versio_grid') as HTMLInputElement).innerHTML = new_history;
   }
 }

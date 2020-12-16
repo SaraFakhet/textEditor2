@@ -156,10 +156,11 @@ def toolBox(file):
 
 @app.route('/versions/<file>')
 def getVersions(file):
-    rows_count = cur.execute("SELECT * FROM version WHERE filename LIKE '" + file + "' ORDER BY created_at ASC")
-    if rows_count != None and rows_count > 0:
+    rows_count = cur.execute("SELECT * FROM version WHERE filename LIKE '" + file + "' ORDER BY created_at DESC")
+    try:
         records =  cur.fetchall()
-    else:
+    except:
+        print('EXCEPT')
         records = []
     return jsonify(records)
 

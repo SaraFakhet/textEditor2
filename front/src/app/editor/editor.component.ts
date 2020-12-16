@@ -31,6 +31,7 @@ export class EditorComponent implements OnInit {
     this.data.currentChannel.subscribe(channel => this.channel = channel);
     this.data.currentText.subscribe(text => this.text = text);
     this.data.currentPseudo.subscribe(pseudo => this.pseudo = pseudo);
+    this.data.currentHistoryVersionning.subscribe(history => this.history = history);
   }
 
   keyPress(event) {
@@ -39,9 +40,11 @@ export class EditorComponent implements OnInit {
       this.http.post(baseUrl.URL + '/text-box/' + this.filename, {'body': event, 'user': this.pseudo}).subscribe(data => {});
       //this.printLoginRoute();
     }
+    /*
     this.history = this.http.get(baseUrl.URL + '/versions/' + this.filename).subscribe(data => {});
     console.log('HISTORY 2:');
     console.log(this.history);
+    */
   }
 
   printLoginRoute() {
