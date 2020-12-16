@@ -196,13 +196,13 @@ export class DataService {
     (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
   }
 
-  setFontSize(value: any) {
+  setFontSize(value: number) {
     this.fontSize.next(value);
     (document.getElementById('spinButtonId') as HTMLInputElement).innerHTML = value + " pt";
     (document.getElementById('textarea1') as HTMLInputElement).style.fontSize = value + 'pt';
   }
 
-  setFontFamily(value: any) {
+  setFontFamily(value: string) {
     this.fontFamily.next(value);
     (document.getElementById('fontType') as HTMLInputElement).setAttribute('aria-label', 'Font: ' + value);
     (document.getElementById('fontType') as HTMLInputElement).innerHTML = value;
