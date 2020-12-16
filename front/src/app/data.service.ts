@@ -34,9 +34,10 @@ export class DataService {
   private right = new BehaviorSubject<boolean>(false);
   currentRight = this.right.asObservable();
 
-  /*private fontFamily:String = "sans-serif";
-  private fontSize:any = 14;
-*/
+  //private fontFamily:String = "sans-serif";
+  private fontSize = new BehaviorSubject<number>(14);
+  currentFontSize = this.fontSize.asObservable();
+
   private pusher: Pusher;
   private channelSource;
   currentChannel;
@@ -52,33 +53,37 @@ export class DataService {
   }
 
   changeChannel(filename: string) {
-    console.log("change channel");
     this.channelSource.next(this.pusher.subscribe(filename));
     this.channelSource.value.bind('text-box', function(data) {
-      this.textSource.next(data['body']);
-      if (data['bold'] != undefined)
-        this.bold.next(data['bold']);
-      //this.setBold(data['bold']);
+    this.textSource.next(data['body']);
+    }, this);
+
+    this.channelSource.value.bind('tool-box', function(data) {
+      if (data['bold'] != undefined) {
+        this.setBold(data['bold']);
+      }
       if (data['italic'] != undefined)
-        this.italic.next(data['italic']);
-        //this.setItalic(data['italic']);
+        this.setItalic(data['italic']);
       if (data['underline'] != undefined)
-        this.underline.next(data['underline']);
-        //this.setUnderline(data['underline']);
+        this.setUnderline(data['underline']);
+        //this.underline.next(data['underline']);
       if (data['align'] != undefined)
       {
-        if (data['align'] == 'left') {
-          this.left.next(true);
-          this.center.next(false);
-          this.right.next(false);
-          //this.setLeft();
+        if (data['align'] === 'left') {
+          //this.left.next(true);
+          //this.center.next(false);
+          //this.right.next(false);
+          console.log("balo")
+          this.setLeft();
         }
-        if (data['align'] == 'center')
-          this.center.next(true);
-          //this.setCenter();
-        if (data['align'] == 'right')
-          this.right.next(true);
-          //this.setRight();
+        else if (data['align'] === 'center') {
+          //this.center.next(true);
+          console.log("c forcmen la" + data['align'])
+          this.setCenter();
+        }
+        else if (data['align'] === 'right')
+          console.log("pourquoi " + data['align'])
+          this.setRight();
       }
       if (data['fontSize'] != undefined)
         this.setFontSize(data['fontSize']);
@@ -92,12 +97,10 @@ export class DataService {
   }
 
   changeFilename(filename: string) {
-    //console.log("change file name to : " + filename);
     this.filenameSource.next(filename);
   }
 
   changeText(text: string) {
-    //console.log("change file name to : " + filename);
     this.textSource.next(text);
   }
 
@@ -105,5 +108,89 @@ export class DataService {
     const bool = !this.bold.value;
     this.bold.next(bool);
     return bool;
+  }
+
+  setBold(bool: boolean) {
+    this.bold.next(bool);
+    if (this.bold.value)
+    {
+      (document.getElementById('textarea1') as HTMLInputElement).style.fontWeight = "bold";
+      (document.getElementById('boldId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
+    }
+    else
+     {
+      (document.getElementById('textarea1') as HTMLInputElement).style.fontWeight = "normal";
+      (document.getElementById('boldId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
+     }
+  }
+
+  setItalic(data: boolean) {
+    this.italic.next(data);
+    if (this.italic.value)
+    {
+      (document.getElementById('textarea1') as HTMLInputElement).style.fontStyle = 'italic';
+      (document.getElementById('italicId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
+    }
+    else
+     {
+      (document.getElementById('textarea1') as HTMLInputElement).style.fontStyle = 'normal';
+      (document.getElementById('italicId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
+     }
+  }
+
+  setUnderline(data: boolean) {
+    this.underline.next(data);
+    if (this.underline.value)
+    {
+      (document.getElementById('textarea1') as HTMLInputElement).style.textDecoration = "underline";
+      (document.getElementById('underlineId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
+    }
+    else
+     {
+      (document.getElementById('textarea1') as HTMLInputElement).style.textDecoration = "none";
+      (document.getElementById('underlineId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
+     }
+  }
+
+  setLeft() {
+    console.log("non")
+    this.left.next(true);
+    this.center.next(false);
+    this.right.next(false);
+
+    (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'left';
+    (document.getElementById('leftId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
+    (document.getElementById('centerId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
+    (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
+  }
+
+  setCenter() {
+    console.log("oui ?")
+    this.left.next(false);
+    this.center.next(true);
+    this.right.next(false);
+
+    (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'center';
+    (document.getElementById('leftId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
+    (document.getElementById('centerId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
+    (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
+  }
+
+  setRight() {
+    console.log("non ?")
+    this.left.next(false);
+    this.center.next(false);
+    this.right.next(true);
+
+    (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'center';
+    (document.getElementById('leftId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
+    (document.getElementById('centerId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
+    (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
+  }
+
+  setFontSize(value: any) {
+    this.fontSize.next(value);
+    (document.getElementById('spinButtonId') as HTMLInputElement).innerHTML = value + " pt";
+    (document.getElementById('textarea1') as HTMLInputElement).style.fontSize = value + 'pt';
   }
 }
