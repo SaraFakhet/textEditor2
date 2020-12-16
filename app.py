@@ -6,25 +6,20 @@ from pusher import Pusher
 import json
 import os
 from flask_cors import CORS
-#import psycopg2
+import psycopg2
 
 
 # create flask app
 app = Flask(__name__)
 CORS(app)
 
-<<<<<<< HEAD:back/start.py
-"""
-con = psycopg2.connect(dbname='editor2database', user='postgres', host='localhost', password='1234')
-=======
 con = psycopg2.connect(dbname='de9ihpsvb026re', user='lstjhnbldzlhii', host='ec2-176-34-114-78.eu-west-1.compute.amazonaws.com', password='9636d9938d4215d06f268862ab7d4dbc645f3bdede8e1f9281ae128eccb174a1')
->>>>>>> develop:app.py
 cur = con.cursor()
 con.commit()
 
 cur.execute("create table files (id serial primary key, filename varchar(255) not null, text varchar(1000), bold bool, italic bool, underline bool, alignement varchar(10), font varchar(100));")
 cur.execute("create table version (filename varchar(255) not null, text varchar(1000), created_at TIMESTAMP, user varchar(100) not null)")  # FIXME a tester
-"""
+
 # configure pusher object
 pusher_client = Pusher(
     app_id = "1105624",
