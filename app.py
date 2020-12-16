@@ -117,8 +117,24 @@ def toolBox(file):
 
     for f in list_open_files:
         if (f.filename == file):
-            keys = data.keys()
-            f[keys[0]] = data[keys[0]] # FIXME wallah je suis pas sur que ça marche comme ça
+            key = list(data.keys())[0]
+
+            if key == 'bold':
+                f.bold = data[key]
+                #cur.execute("UPDATE files SET bold = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+            elif key == 'italic':
+                f.italic = data[key]
+                #cur.execute("UPDATE files SET italic = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+            elif key == 'underline':
+                f.underline = data[key]
+                #cur.execute("UPDATE files SET underline = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+            elif key == 'alignement':
+                f.alignement = data[key]
+                #cur.execute("UPDATE files SET alignement = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+            elif key == 'font':
+                f.font = data[key]
+                #cur.execute("UPDATE files SET font = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+
             break
 
     return jsonify(data)
