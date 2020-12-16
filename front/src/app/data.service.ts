@@ -59,6 +59,7 @@ export class DataService {
     }, this);
 
     this.channelSource.value.bind('tool-box', function(data) {
+      console.log(data);
       if (data['bold'] != undefined) {
         this.setBold(data['bold']);
       }
@@ -66,23 +67,18 @@ export class DataService {
         this.setItalic(data['italic']);
       if (data['underline'] != undefined)
         this.setUnderline(data['underline']);
-        //this.underline.next(data['underline']);
       if (data['align'] != undefined)
       {
         if (data['align'] === 'left') {
-          //this.left.next(true);
-          //this.center.next(false);
-          //this.right.next(false);
-          console.log("balo")
+          console.log("if left");
           this.setLeft();
         }
         else if (data['align'] === 'center') {
-          //this.center.next(true);
-          console.log("c forcmen la" + data['align'])
+          console.log("if center");
           this.setCenter();
         }
         else if (data['align'] === 'right')
-          console.log("pourquoi " + data['align'])
+          console.log("if right");
           this.setRight();
       }
       if (data['fontSize'] != undefined)
@@ -153,7 +149,7 @@ export class DataService {
   }
 
   setLeft() {
-    console.log("non")
+    console.log("set left")
     this.left.next(true);
     this.center.next(false);
     this.right.next(false);
@@ -165,7 +161,7 @@ export class DataService {
   }
 
   setCenter() {
-    console.log("oui ?")
+    console.log("set center")
     this.left.next(false);
     this.center.next(true);
     this.right.next(false);
@@ -177,12 +173,12 @@ export class DataService {
   }
 
   setRight() {
-    console.log("non ?")
+    console.log("set right")
     this.left.next(false);
     this.center.next(false);
     this.right.next(true);
 
-    (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'center';
+    (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'right';
     (document.getElementById('leftId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
     (document.getElementById('centerId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
     (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'true');

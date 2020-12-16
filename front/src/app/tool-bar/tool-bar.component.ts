@@ -50,49 +50,37 @@ export class ToolBarComponent implements OnInit {
   }
 
   BoldPress() {
-      //this.bold = !this.bold;
-      //var bold = this.data.changeBold();
       this.http.post('http://localhost:5000/tool-box/' + this.filename, {'bold': !this.bold}).subscribe(data => {});
   }
 
   ItalicPress() {
-    //this.italic = !this.italic;
     this.http.post('http://localhost:5000/tool-box/' + this.filename, {'italic': !this.italic}).subscribe(data => {});
   }
 
   UnderlinePress() {
-    //this.underline = !this.underline;
     this.http.post('http://localhost:5000/tool-box/' + this.filename, {'underline': !this.underline}).subscribe(data => {});
   }
 
   LeftPress() {
-    /*this.left = true;
-    this.center = false;
-    this.right = false;*/
+    console.log("leftpress");
     this.http.post('http://localhost:5000/tool-box/' + this.filename, {'align': 'left'}).subscribe(data => {});
   }
 
   CenterPress() {
-    /*this.center = true;
-    this.left = false;
-    this.right = false;*/
+    console.log("centerpress");
     this.http.post('http://localhost:5000/tool-box/' + this.filename, {'align': 'center'}).subscribe(data => {});
   }
 
   RightPress() {
-    /*this.right = true;
-    this.center = false;
-    this.left = false;*/
+    console.log("rightpress");
     this.http.post('http://localhost:5000/tool-box/' + this.filename, {'align':'right'}).subscribe(data => {});
   }
 
   IncreasePress() {
-    //this.fontSize += 1;
     this.http.post('http://localhost:5000/tool-box/' + this.filename, {'fontSize':this.fontSize + 1}).subscribe(data => {});
   }
 
   DecreasePress() {
-    //this.fontSize -= 1;
     this.http.post('http://localhost:5000/tool-box/' + this.filename, {'fontSize':this.fontSize - 1}).subscribe(data => {});
   }
 
