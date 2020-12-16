@@ -103,6 +103,7 @@ textarea {
     height: 100%;
     position: fixed;
     top: 0;
+    left: 0;
     display: none;
     justify-content: center;
     align-items: center;
@@ -110,7 +111,7 @@ textarea {
 }
 
 .modal-contents {
-    height: 120px;
+    height: 180px;
     width: 400px;
     background-color: white;
     text-align: center;
@@ -147,6 +148,7 @@ input {
     height: 100%;
     position: fixed;
     top: 0;
+    left: 0;
     display: none;
     justify-content: center;
     align-items: center;
@@ -227,6 +229,7 @@ input {
     height: 100%;
     position: fixed;
     top: 0;
+    left: 0;
     display: none;
     justify-content: center;
     align-items: center;
