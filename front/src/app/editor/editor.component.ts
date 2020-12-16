@@ -39,7 +39,9 @@ export class EditorComponent implements OnInit {
       this.http.post(baseUrl.URL + '/text-box/' + this.filename, {'body': event, 'user': this.pseudo}).subscribe(data => {});
       //this.printLoginRoute();
     }
-    this.history = this.http.get('http://localhost:5000/versions/' + this.filename).subscribe(data => {});
+    this.history = this.http.get(baseUrl.URL + '/versions/' + this.filename).subscribe(data => {});
+    console.log('HISTORY 2:');
+    console.log(this.history);
   }
 
   printLoginRoute() {

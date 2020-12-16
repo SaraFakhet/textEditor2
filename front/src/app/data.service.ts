@@ -63,10 +63,11 @@ export class DataService {
     this.textSource.next(data['body']);
     }, this);
 
-    this.channelSource.value.bind('history', function(data) {
+    this.channelSource.value.bind('version', function(data) {
+      console.log('HISTORY');
       console.log(data);
-      
-    })
+      this.setHistoryVersionning(data);
+    }, this);
 
     this.channelSource.value.bind('tool-box', function(data) {
       //console.log(data);
@@ -211,13 +212,11 @@ export class DataService {
 
   setHistoryVersionning(value: any) {
     this.historyVersionning.next(value);
-    (document.getElementById('versio_grid') as HTMLInputElement).innerHTML = '';
-    value.forEach(history => {
       (document.getElementById('versio_grid') as HTMLInputElement).innerHTML += '<div>\
-      <div class="buffer">La vie cest la beauté dun petit moment avec sa famille, même si on aime pas sa soeur parce que cest une conasse</div> \
-      <div style="font-size: 12px; width: 100%;">Modifié par : user</div> \
-      <div style="font-size: 12px; width: 100%;">à : </div> \
+      <div style="border: 1px solid black; border-radius: 3px; height: 100px; overflow-wrap: anywhere; \
+      overflow: hidden; overflow-y: scroll; text-align: justify; font-size: 10px;">' + value.text + '</div> \
+      <div style="font-size: 12px; width: 100%;">Modifié par :' + value.user + '</div> \
+      <div style="font-size: 12px; width: 100%;">à :' + value.date + '</div> \
   </div>';
-    });
   }
 }
