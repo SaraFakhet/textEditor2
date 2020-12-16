@@ -215,8 +215,8 @@ export class DataService {
       (document.getElementById('versio_grid') as HTMLInputElement).innerHTML += '<div>\
       <div style="border: 1px solid black; border-radius: 3px; height: 100px; overflow-wrap: anywhere; \
       overflow: hidden; overflow-y: scroll; text-align: justify; font-size: 10px;">' + value.text + '</div> \
-      <div style="font-size: 12px; width: 100%;">Modifié par :' + value.user + '</div> \
-      <div style="font-size: 12px; width: 100%;">à :' + value.date + '</div> \
+      <div style="font-size: 12px; width: 100%;">Modifié par : ' + value.user + '</div> \
+      <div style="font-size: 12px; width: 100%;">à : ' + value.date + '</div> \
   </div>';
   }
 }
