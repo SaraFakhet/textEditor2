@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import Pusher, { Channel } from 'pusher-js';
 import { NgForm } from '@angular/forms';
 import { DataService } from "../data.service";
+import baseUrl from '../baseUrl';
 
 @Component({
   selector: 'app-editor',
@@ -20,6 +21,7 @@ export class EditorComponent implements OnInit {
   channel: Channel;
   filename: string;
   history: Object;
+  pseudo: string;
 
   constructor(private http: HttpClient, private data: DataService) { 
    }
@@ -28,12 +30,13 @@ export class EditorComponent implements OnInit {
     this.data.currentFilename.subscribe(filename => this.filename = filename);
     this.data.currentChannel.subscribe(channel => this.channel = channel);
     this.data.currentText.subscribe(text => this.text = text);
+    this.data.currentPseudo.subscribe(pseudo => this.pseudo = pseudo);
   }
 
   keyPress(event) {
     this.data.changeText(event);
     if (this.text != '') {
-      this.http.post('http://localhost:5000/text-box/' + this.filename, {'body': event}).subscribe(data => {});
+      this.http.post(baseUrl.URL + '/text-box/' + this.filename, {'body': event, 'user': this.pseudo}).subscribe(data => {});
       //this.printLoginRoute();
     }
     this.history = this.http.get('http://localhost:5000/versions/' + this.filename).subscribe(data => {});
@@ -41,7 +44,7 @@ export class EditorComponent implements OnInit {
 
   printLoginRoute() {
     console.log('test');
-    this.http.get('http://localhost:5000/').subscribe(data => {
+    this.http.get(baseUrl.URL).subscribe(data => {
       this.reponse = data;
   }
     );

@@ -17,7 +17,7 @@ con = psycopg2.connect(dbname='de9ihpsvb026re', user='lstjhnbldzlhii', host='ec2
 cur = con.cursor()
 con.commit()
 
-cur.execute("create table if not exists files (id serial primary key, filename varchar(255) not null, text varchar(1000), bold bool, italic bool, underline bool, alignement varchar(10), font varchar(100));")
+cur.execute("create table if not exists files (id serial primary key, filename varchar(255) not null, text varchar(1000), bold bool, italic bool, underline bool, alignement varchar(10), font varchar(100), fontsize integer);")
 cur.execute("create table if not exists version (filename varchar(255) not null, text varchar(1000), created_at TIMESTAMP, users varchar(100) not null)")  # FIXME a tester
 
 # configure pusher object
@@ -34,7 +34,7 @@ def index():
     return jsonify('index')
 
 class Files:
-    def __init__(self, filename, text='', bold=False, italic=False, underline=False, alignement='left', font='Sans-Serif'):
+    def __init__(self, filename, text='', bold=False, italic=False, underline=False, alignement='left', font='Sans-Serif', fontsize = 14):
         self.filename = filename
         self.text = text
         self.bold = bold
@@ -42,6 +42,7 @@ class Files:
         self.underline = underline
         self.alignement = alignement
         self.font = font
+        self.fontsize = fontsize
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.dict, sort_keys=True, indent=4)
@@ -82,6 +83,10 @@ def save():
 
 @app.route('/open-files/<filename>')
 def openFile(filename):
+    for f in list_open_files:
+        if f.filename == filename:
+            return '200'
+
     f = Files(filename)
     print("f " + f.filename)
     print("before : " + str(list_open_files))
@@ -90,7 +95,7 @@ def openFile(filename):
 
     cur.execute( \
         "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
-        str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "')")
+        str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "'," + f.fontsize + ")")
     con.commit()
 
     return '200'
@@ -133,12 +138,15 @@ def toolBox(file):
             elif key == 'underline':
                 f.underline = data[key]
                 cur.execute("UPDATE files SET underline = '" + str(data[key]) + "' WHERE filename LIKE '" + file + "'")
-            elif key == 'alignement':
+            elif key == 'align':
                 f.alignement = data[key]
                 cur.execute("UPDATE files SET alignement = '" + data[key] + "' WHERE filename LIKE '" + file + "'")
-            elif key == 'font':
+            elif key == 'fontFamily':
                 f.font = data[key]
                 cur.execute("UPDATE files SET font = '" + data[key] + "' WHERE filename LIKE '" + file + "'")
+            elif key == 'fontSize':
+                f.font = data[key]
+                cur.execute("UPDATE files SET fontsize = " + str(data[key]) + " WHERE filename LIKE '" + file + "'")
             con.commit()
             break
 

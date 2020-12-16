@@ -4,6 +4,7 @@ import { Channel } from 'pusher-js';
 import { VirtualTimeScheduler } from 'rxjs';
 import { DataService } from "../data.service";
 import { HttpClient } from '@angular/common/http';
+import baseUrl from '../baseUrl';
 
 export interface AllFiles {
   data: Array<[{
@@ -15,6 +16,16 @@ export interface AllFiles {
     text: {body: string},
     underline: boolean
   }]>
+}
+
+export interface File {
+    alignement: string,
+    bold: boolean,
+    filename: string,
+    font: string,
+    italic: boolean,
+    text: string,
+    underline: boolean
 }
 
 @Component({
@@ -40,7 +51,6 @@ export class TopBarComponent implements OnInit {
 
   onSubmitLogin(form: NgForm) {
     this.data.changePseudo(form.value);
-    this.closeLogin();
     this.openFilename();
   }
 
@@ -49,15 +59,37 @@ export class TopBarComponent implements OnInit {
     this.data.changeFilename(form.value);
     this.data.changeChannel(form.value);
     this.closeFilename();
-    this.http.get('http://localhost:5000/open-files/' + form.value).subscribe(data => {});
+    this.http.get(baseUrl.URL + '/open-files/' + form.value).subscribe(data => {});
   }
 
   clickFilename(filename: string) {
     console.log("file name : " + filename)
-    this.data.changeFilename(filename);
-    this.data.changeChannel(filename);
-    this.closeFilename();
-    this.http.get('http://localhost:5000/open-files/' + filename).subscribe(data => {});
+    this.http.get<File>(baseUrl.URL + '/load-file/' + filename).toPromise().then(data => {
+      console.log("alignement " + data.alignement)
+      this.data.changeText(data.text);
+      this.data.setBold(data.bold);
+      this.data.setFontFamily(data.font);
+      this.data.setItalic(data.italic);
+      this.data.setUnderline(data.underline);
+      switch (data.alignement) {
+        case 'left':
+          this.data.setLeft();
+          break;
+        case 'center':
+          this.data.setCenter();
+          break;
+        case 'right':
+          this.data.setRight();
+          break;
+        default:
+          this.data.setLeft();
+          break;
+      }
+      this.data.changeFilename(filename);
+      this.data.changeChannel(filename);
+      this.closeFilename();
+      this.closeSelectFiles();
+    });
   }
 
   openSaveFiles() { 
@@ -72,11 +104,17 @@ export class TopBarComponent implements OnInit {
     (document.querySelector('.bg-modal') as HTMLInputElement).style.display = "none";
     var filename = (document.getElementById('submitSaveInput') as HTMLInputElement).value;
     this.data.changeFilename(filename);
-    //console.log("filename : " + this.fileName);
+    this.data.changeChannel(filename);
+    this.http.get(baseUrl.URL + '/open-files/' + filename).subscribe(data => {});
   }
 
   openSelectFiles() {
-    (document.querySelector('.bg-modal2') as HTMLInputElement).style.display = "flex";
+    let response = this.http.get<AllFiles>(baseUrl.URL + '/list-open-files').toPromise().then(data => {
+      this.closeLogin();
+      this.allFiles = data;
+      console.log(JSON.stringify(this.allFiles));
+      (document.querySelector('.bg-modal2') as HTMLInputElement).style.display = "flex";
+    });
   }
 
   closeSelectFiles() {
@@ -96,7 +134,8 @@ export class TopBarComponent implements OnInit {
   }
 
   openFilename() {
-    let response = this.http.get<AllFiles>('http://localhost:5000/list-open-files').toPromise().then(data => {
+    let response = this.http.get<AllFiles>(baseUrl.URL + '/list-open-files').toPromise().then(data => {
+      this.closeLogin();
       this.allFiles = data;
       console.log(JSON.stringify(this.allFiles));
       (document.querySelector('.bg-modal-filename') as HTMLInputElement).style.display = "flex";

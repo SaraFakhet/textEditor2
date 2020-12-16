@@ -6,7 +6,7 @@
 </a>
 <a class="icon-bar" (click)="openSaveFiles()">
     <div class="icon-text-bar">
-        <i class="material-icons">save</i>Sauvegarder
+        <i class="material-icons">save</i>Nouveau
     </div>
 </a>
 <a class="icon-bar" (click)="openRemoveFiles()">
@@ -19,7 +19,7 @@
     <div class="modal-contents">
         <div class="close" (click)="closeUnsaveFiles()">+</div>
         <form action="">
-            <div class="popupTitle">Sauvegarder</div>
+            <div class="popupTitle">Créer un nouveau fichier</div>
             <input type="text" id="submitSaveInput" placeholder="Nom du fichier">
             <a href="#" id="submitSaveButton" (click)="closeSaveFiles()" class="button" style="margin-left: 0px;">Valider</a>
         </form> 
@@ -33,9 +33,13 @@
             <div class="popupTitle" style="margin-bottom: 30px">Sélectionnez un fichier</div>
             <div style="overflow: hidden; overflow-y: scroll; height: 360px;">
                 <div class="doc_grid" id="grid">
-
-
-
+                    <div *ngIf="allFiles !== undefined">
+                        <div *ngFor="let file of allFiles.data">
+                            <a (click)="clickFilename(file.filename)">
+                                {{ file.filename }}
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
