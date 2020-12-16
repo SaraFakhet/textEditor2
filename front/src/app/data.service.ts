@@ -171,9 +171,6 @@ export class DataService {
     this.right.next(false);
 
     (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'left';
-    (document.getElementById('leftId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
-    (document.getElementById('centerId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-    (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
   }
 
   setCenter() {
@@ -183,9 +180,6 @@ export class DataService {
     this.right.next(false);
 
     (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'center';
-    (document.getElementById('leftId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-    (document.getElementById('centerId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
-    (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
   }
 
   setRight() {
@@ -195,9 +189,6 @@ export class DataService {
     this.right.next(true);
 
     (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'right';
-    (document.getElementById('leftId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-    (document.getElementById('centerId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-    (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
   }
 
   setFontSize(value: number) {
