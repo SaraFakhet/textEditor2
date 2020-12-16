@@ -6,20 +6,20 @@ from pusher import Pusher
 import json
 import os
 from flask_cors import CORS
-import psycopg2
+#import psycopg2
 
 
 # create flask app
 app = Flask(__name__)
 CORS(app)
-
+"""
 con = psycopg2.connect(dbname='de9ihpsvb026re', user='lstjhnbldzlhii', host='ec2-176-34-114-78.eu-west-1.compute.amazonaws.com', password='9636d9938d4215d06f268862ab7d4dbc645f3bdede8e1f9281ae128eccb174a1')
 cur = con.cursor()
 con.commit()
 
 cur.execute("create table files (id serial primary key, filename varchar(255) not null, text varchar(1000), bold bool, italic bool, underline bool, alignement varchar(10), font varchar(100));")
 cur.execute("create table version (filename varchar(255) not null, text varchar(1000), created_at TIMESTAMP, user varchar(100) not null)")  # FIXME a tester
-
+"""
 # configure pusher object
 pusher_client = Pusher(
     app_id = "1105624",
@@ -82,6 +82,11 @@ def save():
 def openFile(filename):
     f = Files(filename)
     list_open_files.append(f) # use files class
+    """
+    cur.execute( \
+        "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
+        str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "')")
+    """
     return '200'
 
 
@@ -95,13 +100,10 @@ def textBox(file):
     for f in list_open_files:
         if (f.filename == file):
             f.text = data
-            cur.execute( \
-                "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
-                str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "')")
-
+            """
             cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data.user + "')") # FIXME a tester
             con.commit()
-
+            """
             break
 
     return jsonify(data)
