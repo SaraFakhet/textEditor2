@@ -82,6 +82,10 @@ def save():
 
 @app.route('/open-files/<filename>')
 def openFile(filename):
+    for f in list_open_files:
+        if f.filename == filename:
+            return '200'
+
     f = Files(filename)
     print("f " + f.filename)
     print("before : " + str(list_open_files))
