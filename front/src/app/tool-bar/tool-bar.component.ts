@@ -41,14 +41,6 @@ export class ToolBarComponent implements OnInit {
         this.data.currentFontSize.subscribe(fontSize => this.fontSize = fontSize);
   }
 
-  setFontFamily(value:any) {
-
-      (document.getElementById('fontType') as HTMLInputElement).setAttribute('aria-label', 'Font: ' + value);
-      (document.getElementById('fontType') as HTMLInputElement).innerHTML = value;
-      (document.getElementById('fontType') as HTMLInputElement).style.fontFamily = value;
-      (document.getElementById('textarea1') as HTMLInputElement).style.fontFamily = value;
-  }
-
   BoldPress() {
       this.http.post('http://localhost:5000/tool-box/' + this.filename, {'bold': !this.bold}).subscribe(data => {});
   }

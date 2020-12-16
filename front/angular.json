@@ -27,7 +27,13 @@
               "src/styles.css"
             ],
             "scripts": [
-
+              "src/assets/js/user.js",
+              "src/assets/js/fontMenu.js",
+              "src/assets/js/fontMenuButton.js",
+              "src/assets/js/fontMenuItem.js",
+              "src/assets/js/fontToolbarItem.js",
+              "src/assets/js/formatToolbar.js",
+              "src/assets/js/spinButton.js"
             ]
           },
           "configurations": {

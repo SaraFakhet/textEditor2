@@ -34,9 +34,11 @@ export class DataService {
   private right = new BehaviorSubject<boolean>(false);
   currentRight = this.right.asObservable();
 
-  //private fontFamily:String = "sans-serif";
   private fontSize = new BehaviorSubject<number>(14);
   currentFontSize = this.fontSize.asObservable();
+
+  private fontFamily = new BehaviorSubject<string>('sans-serif');
+  currentFontFamily = this.fontSize.asObservable();
 
   private pusher: Pusher;
   private channelSource;
@@ -77,9 +79,10 @@ export class DataService {
           console.log("if center");
           this.setCenter();
         }
-        else if (data['align'] === 'right')
+        else if (data['align'] === 'right') {
           console.log("if right");
           this.setRight();
+        }
       }
       if (data['fontSize'] != undefined)
         this.setFontSize(data['fontSize']);
@@ -161,7 +164,7 @@ export class DataService {
   }
 
   setCenter() {
-    console.log("set center")
+    console.log("set center");
     this.left.next(false);
     this.center.next(true);
     this.right.next(false);
@@ -173,7 +176,7 @@ export class DataService {
   }
 
   setRight() {
-    console.log("set right")
+    console.log("set right");
     this.left.next(false);
     this.center.next(false);
     this.right.next(true);
@@ -188,5 +191,13 @@ export class DataService {
     this.fontSize.next(value);
     (document.getElementById('spinButtonId') as HTMLInputElement).innerHTML = value + " pt";
     (document.getElementById('textarea1') as HTMLInputElement).style.fontSize = value + 'pt';
+  }
+
+  setFontFamily(value: any) {
+    this.fontFamily.next(value);
+    (document.getElementById('fontType') as HTMLInputElement).setAttribute('aria-label', 'Font: ' + value);
+    (document.getElementById('fontType') as HTMLInputElement).innerHTML = value;
+    (document.getElementById('fontType') as HTMLInputElement).style.fontFamily = value;
+    (document.getElementById('textarea1') as HTMLInputElement).style.fontFamily = value;
   }
 }
