@@ -56,7 +56,9 @@ def getName(f):
 
 @app.route('/list-open-files')
 def getListOpenFiles():
-    return  jsonify({ "data": list(map(lambda f: vars(f), list_open_files))})
+    print("list_open_files : " + list_open_files)
+    print("len(list_open_files) : " + len(list_open_files))
+    return jsonify({ "data": list(map(lambda f: vars(f), list_open_files))})
 
 
 @app.route('/load-file/<filename>')
@@ -82,11 +84,11 @@ def save():
 def openFile(filename):
     f = Files(filename)
     list_open_files.append(f) # use files class
-    """
+
     cur.execute( \
         "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
         str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "')")
-    """
+
     return '200'
 
 
@@ -102,7 +104,7 @@ def textBox(file):
             f.text = data['body']
             """
             cur.execute("UPDATE files SET text = '" + data['body'] + "' WHERE filename ISLIKE '" + file + "'")
-            cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data.user + "')") # FIXME a tester
+            #cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data.user + "')") # FIXME a tester
             con.commit()
             """
             break
