@@ -109,11 +109,12 @@ def textBox(file):
     data = json.loads(request.data) # load JSON data from request
     pusher_client.trigger(file, 'text-box', data)
 
+
     for f in list_open_files:
         if (f.filename == file):
-            f.text = data['body']
+            f.text = data['body'].replace("'", "''")
 
-            cur.execute("UPDATE files SET text = '" + data['body'] + "' WHERE filename LIKE '" + file + "'")
+            cur.execute("UPDATE files SET text = '" + f.text + "' WHERE filename LIKE '" + file + "'")
             cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data['user'] + "')") # FIXME a tester
             con.commit()
             pusher_client.trigger(file, 'version', { "filename": f.filename, "text": f.text,"date": datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f'), "user": data['user']})
