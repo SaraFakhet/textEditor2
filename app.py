@@ -91,6 +91,7 @@ def openFile(filename):
     cur.execute( \
         "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
         str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "')")
+    con.commit()
 
     return '200'
 
