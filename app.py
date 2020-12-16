@@ -108,7 +108,7 @@ def textBox(file):
             f.text = data['body']
 
             cur.execute("UPDATE files SET text = '" + data['body'] + "' WHERE filename LIKE '" + file + "'")
-            cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data.user + "')") # FIXME a tester
+            cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data['user'] + "')") # FIXME a tester
             con.commit()
             break
 
