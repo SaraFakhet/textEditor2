@@ -126,19 +126,19 @@ def toolBox(file):
 
             if key == 'bold':
                 f.bold = data[key]
-                cur.execute("UPDATE files SET bold = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+                cur.execute("UPDATE files SET bold = '" + data[keys] + "' WHERE filename LIKE '" + file + "'")
             elif key == 'italic':
                 f.italic = data[key]
-                cur.execute("UPDATE files SET italic = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+                cur.execute("UPDATE files SET italic = '" + data[keys] + "' WHERE filename LIKE '" + file + "'")
             elif key == 'underline':
                 f.underline = data[key]
-                cur.execute("UPDATE files SET underline = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+                cur.execute("UPDATE files SET underline = '" + data[keys] + "' WHERE filename LIKE '" + file + "'")
             elif key == 'alignement':
                 f.alignement = data[key]
-                cur.execute("UPDATE files SET alignement = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+                cur.execute("UPDATE files SET alignement = '" + data[keys] + "' WHERE filename LIKE '" + file + "'")
             elif key == 'font':
                 f.font = data[key]
-                cur.execute("UPDATE files SET font = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+                cur.execute("UPDATE files SET font = '" + data[keys] + "' WHERE filename LIKE '" + file + "'")
             con.commit()
             break
 
@@ -147,7 +147,7 @@ def toolBox(file):
 
 @app.route('/versions/<file>')
 def getVersions(file):
-    cur.execute("SELECT * FROM version WHERE filename ISLIKE '" + file + "' ORDER BY created_at ASC")
+    cur.execute("SELECT * FROM version WHERE filename LIKE '" + file + "' ORDER BY created_at ASC")
     records = cur.fetchall()
     return records
 
