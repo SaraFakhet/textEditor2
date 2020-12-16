@@ -5,6 +5,7 @@ import { VirtualTimeScheduler } from 'rxjs';
 import { DataService } from "../data.service";
 import { HttpClient } from '@angular/common/http';
 import baseUrl from '../baseUrl';
+import { formatNumber } from '@angular/common';
 
 export interface AllFiles {
   data: Array<[{
@@ -25,7 +26,8 @@ export interface File {
     font: string,
     italic: boolean,
     text: string,
-    underline: boolean
+    underline: boolean,
+    fontsize: number
 }
 
 @Component({
@@ -85,11 +87,25 @@ export class TopBarComponent implements OnInit {
           this.data.setLeft();
           break;
       }
+      console.log("DATA = " + data);
       this.data.changeFilename(filename);
       this.data.changeChannel(filename);
+      this.data.setFontSize(data.fontsize);
       this.closeFilename();
       this.closeSelectFiles();
     });
+  }
+
+resetFile() {
+      this.data.changeText("");
+      this.data.setBold(false);
+      this.data.setFontFamily("sans-serif");
+      this.data.setItalic(false);
+      this.data.setUnderline(false);
+      this.data.setLeft();
+      this.data.setFontSize(14);
+      this.closeFilename();
+      this.closeSelectFiles();
   }
 
   openSaveFiles() { 
@@ -105,6 +121,7 @@ export class TopBarComponent implements OnInit {
     var filename = (document.getElementById('submitSaveInput') as HTMLInputElement).value;
     this.data.changeFilename(filename);
     this.data.changeChannel(filename);
+    this.resetFile();
     this.http.get(baseUrl.URL + '/open-files/' + filename).subscribe(data => {});
   }
 

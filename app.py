@@ -130,7 +130,6 @@ def toolBox(file):
     for f in list_open_files:
         if f.filename == file:
             key = list(data.keys())[0]
-
             if key == 'bold':
                 f.bold = data[key]
                 cur.execute("UPDATE files SET bold = '" + str(data[key]) + "' WHERE filename LIKE '" + file + "'")
@@ -147,7 +146,7 @@ def toolBox(file):
                 f.font = data[key]
                 cur.execute("UPDATE files SET font = '" + data[key] + "' WHERE filename LIKE '" + file + "'")
             elif key == 'fontSize':
-                f.font = data[key]
+                f.fontsize = data[key]
                 cur.execute("UPDATE files SET fontsize = " + str(data[key]) + " WHERE filename LIKE '" + file + "'")
             con.commit()
             break
