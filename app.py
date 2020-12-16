@@ -56,8 +56,8 @@ def getName(f):
 
 @app.route('/list-open-files')
 def getListOpenFiles():
-    print("list_open_files : " + list_open_files)
-    print("len(list_open_files) : " + len(list_open_files))
+    print("list_open_files : " + str(list_open_files))
+    print("len(list_open_files) : " + str(len(list_open_files)))
     return jsonify({ "data": list(map(lambda f: vars(f), list_open_files))})
 
 
