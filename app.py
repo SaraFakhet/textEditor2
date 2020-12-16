@@ -6,7 +6,7 @@ from pusher import Pusher
 import json
 import os
 from flask_cors import CORS
-#import psycopg2
+import psycopg2
 
 
 # create flask app
