@@ -126,13 +126,13 @@ def toolBox(file):
 
             if key == 'bold':
                 f.bold = data[key]
-                cur.execute("UPDATE files SET bold = '" + data[key] + "' WHERE filename LIKE '" + file + "'")
+                cur.execute("UPDATE files SET bold = '" + str(data[key]) + "' WHERE filename LIKE '" + file + "'")
             elif key == 'italic':
                 f.italic = data[key]
-                cur.execute("UPDATE files SET italic = '" + data[key] + "' WHERE filename LIKE '" + file + "'")
+                cur.execute("UPDATE files SET italic = '" + str(data[key]) + "' WHERE filename LIKE '" + file + "'")
             elif key == 'underline':
                 f.underline = data[key]
-                cur.execute("UPDATE files SET underline = '" + data[key] + "' WHERE filename LIKE '" + file + "'")
+                cur.execute("UPDATE files SET underline = '" + str(data[key]) + "' WHERE filename LIKE '" + file + "'")
             elif key == 'alignement':
                 f.alignement = data[key]
                 cur.execute("UPDATE files SET alignement = '" + data[key] + "' WHERE filename LIKE '" + file + "'")
