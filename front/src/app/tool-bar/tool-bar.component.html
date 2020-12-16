@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<body>
-    <h1 style="margin-top: 0; font-weight: bold; text-transform: capitalize; padding-top: 10px;">📝 {{ filename }}</h1>
-    <div class="format"
-         role="toolbar"
+<body style="height: 90px;">
+    <h1 style="margin-top: 0; font-weight: bold; text-transform: capitalize; padding-top: 10px; margin-bottom: 10px;">📝 {{ filename }}</h1>
+    <div role="toolbar"
          aria-label="Text Formatting"
          aria-controls="textarea1"
-         style="height: 60px;">
+         style="height: 55px;">
         <div class="group characteristics">
             <button id="boldId" class="item bold popup" (click)="BoldPress()"
                     aria-pressed="false"
