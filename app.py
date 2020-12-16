@@ -6,7 +6,7 @@ from pusher import Pusher
 import json
 import os
 from flask_cors import CORS
-import psycopg2
+#import psycopg2
 
 
 # create flask app
@@ -82,6 +82,11 @@ def save():
 def openFile(filename):
     f = Files(filename)
     list_open_files.append(f) # use files class
+    """
+    cur.execute( \
+        "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
+        str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "')")
+    """
     return '200'
 
 
@@ -94,14 +99,12 @@ def textBox(file):
 
     for f in list_open_files:
         if (f.filename == file):
-            f.text = data
-            cur.execute( \
-                "INSERT INTO files (filename, text, bold, italic, underline, alignement, font) VALUES ('" + f.filename + "', '" + f.text + "', " + \
-                str(f.bold) + ", " + str(f.italic) + ", " + str(f.underline) + ", '" + f.alignement + "', '" + f.font + "')")
-
+            f.text = data['body']
+            """
+            cur.execute("UPDATE files SET text = '" + data['body'] + "' WHERE filename ISLIKE '" + file + "'")
             cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data.user + "')") # FIXME a tester
             con.commit()
-
+            """
             break
 
     return jsonify(data)
@@ -114,8 +117,24 @@ def toolBox(file):
 
     for f in list_open_files:
         if (f.filename == file):
-            keys = data.keys()
-            f[keys[0]] = data[keys[0]] # FIXME wallah je suis pas sur que ça marche comme ça
+            key = list(data.keys())[0]
+
+            if key == 'bold':
+                f.bold = data[key]
+                #cur.execute("UPDATE files SET bold = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+            elif key == 'italic':
+                f.italic = data[key]
+                #cur.execute("UPDATE files SET italic = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+            elif key == 'underline':
+                f.underline = data[key]
+                #cur.execute("UPDATE files SET underline = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+            elif key == 'alignement':
+                f.alignement = data[key]
+                #cur.execute("UPDATE files SET alignement = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+            elif key == 'font':
+                f.font = data[key]
+                #cur.execute("UPDATE files SET font = '" + data[keys] + "' WHERE filename ISLIKE '" + file + "'")
+
             break
 
     return jsonify(data)
