@@ -19,7 +19,7 @@ export class EditorComponent implements OnInit {
   pusher: Pusher;
   channel: Channel;
   filename: string;
-  history: Object;
+  //history: Object;
 
   constructor(private http: HttpClient, private data: DataService) { 
    }
@@ -37,6 +37,12 @@ export class EditorComponent implements OnInit {
       //this.printLoginRoute();
     }
   }
+
+  /*
+  getHistory(filename) {
+    history = this.http.get('http://localhost:5000/versions/' + this.filename).subscribe(data => {});
+  }
+  */
 
   printLoginRoute() {
     console.log('test');
