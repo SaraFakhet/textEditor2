@@ -7,6 +7,7 @@ import json
 import os
 from flask_cors import CORS
 import psycopg2
+import datetime
 
 
 # create flask app
@@ -115,6 +116,7 @@ def textBox(file):
             cur.execute("UPDATE files SET text = '" + data['body'] + "' WHERE filename LIKE '" + file + "'")
             cur.execute("INSERT INTO version VALUES ('"+ f.filename +"','" + f.text + "', NOW(),'" + data['user'] + "')") # FIXME a tester
             con.commit()
+            pusher_client.trigger(file, 'version', { "filename": f.filename, "text": f.text,"date": datetime.datetime.now(), "user": data['user']})
             break
 
     return jsonify(data)
