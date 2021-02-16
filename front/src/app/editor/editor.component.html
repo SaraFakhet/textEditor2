@@ -1,12 +1,21 @@
-<h1>Document collaboratif</h1>
-<textarea id="textarea1" placeholder="Ecrivez ici..." name="textarea" (ngModelChange)="keyPress($event)" [(ngModel)]="text"></textarea>
-
 <div class="versionning">
-    <div style="margin: inherit; margin-bottom: 20px; font-family: sans-serif;">
-        Historique de modification du fichier en base de données
+  <h1 style="font-size: 20px; width: 60%; margin-left: 95px">
+    Historique de modification du fichier en base de données
+  </h1>
+  <div class="version_box">
+    <div class="versio_grid" id="versio_grid">
+        
     </div>
-    <div style = "overflow: hidden; overflow-y: scroll; height: 285px;">
-        <div class="versio_grid" id="versio_grid">
-        </div>
-    </div>
+  </div>
+</div>
+<div style="width: 65%; margin-top: 30px;">
+  <h1>Document collaboratif</h1>
+  <textarea
+    style="width: 90%; height: 450px;"
+    id="textarea1"
+    placeholder="Ecrivez ici..."
+    name="textarea"
+    (ngModelChange)="keyPress($event)"
+    [(ngModel)]="text"
+  ></textarea>
 </div>

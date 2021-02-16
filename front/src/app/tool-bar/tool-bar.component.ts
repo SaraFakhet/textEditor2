@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Pusher, { Channel } from 'pusher-js';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from "../data.service";
+import baseUrl from '../baseUrl';
 
 @Component({
   selector: 'app-tool-bar',
@@ -21,6 +22,7 @@ export class ToolBarComponent implements OnInit {
 
   pusher: Pusher;
   channel: Channel;
+  differ: any;
 
   pseudo: string;
   filename: string;
@@ -31,169 +33,72 @@ export class ToolBarComponent implements OnInit {
         this.data.currentPseudo.subscribe(pseudo => this.pseudo = pseudo);
         this.data.currentFilename.subscribe(filename => this.filename = filename);
         this.data.currentChannel.subscribe(channel => this.channel = channel);
-  }
-
-  setBold(data:Boolean) {
-    this.bold=(data);
-    if (this.bold)
-    {
-      (document.getElementById('textarea1') as HTMLInputElement).style.fontWeight = "bold";
-      (document.getElementById('boldId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
-    }
-    else
-     {
-      (document.getElementById('textarea1') as HTMLInputElement).style.fontWeight = "normal";
-      (document.getElementById('boldId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-     }
-  }
-
-  setItalic(data:Boolean) {
-    this.italic=(data);
-    console.log(this.italic);
-    if (this.italic)
-    {
-      (document.getElementById('textarea1') as HTMLInputElement).style.fontStyle = 'italic';
-      (document.getElementById('italicId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
-    }
-    else
-     {
-      (document.getElementById('textarea1') as HTMLInputElement).style.fontStyle = 'normal';
-      (document.getElementById('italicId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-     }
-  }
-
-  setUnderline(data:Boolean) {
-    this.underline=(data);
-    if (this.underline)
-    {
-      (document.getElementById('textarea1') as HTMLInputElement).style.textDecoration = "underline";
-      (document.getElementById('underlineId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
-    }
-    else
-     {
-      (document.getElementById('textarea1') as HTMLInputElement).style.textDecoration = "none";
-      (document.getElementById('underlineId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-     }
-  }
-
-  
-  setLeft() {
-    this.left = true;
-    this.center = false;
-    this.right = false;
-
-    (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'left';
-    (document.getElementById('leftId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
-    (document.getElementById('centerId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-    (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-  }
-
-  setCenter() {
-    this.left = false;
-    this.center = true;
-    this.right = false;
-
-    (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'center';
-    (document.getElementById('leftId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-    (document.getElementById('centerId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
-    (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-  }
-
-    
-  setRight() {
-    this.left = false;
-    this.center = false;
-    this.right = true;
-
-    (document.getElementById('textarea1') as HTMLInputElement).style.textAlign = 'right';
-    (document.getElementById('leftId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-    (document.getElementById('centerId') as HTMLInputElement).setAttribute('aria-pressed', 'false');
-    (document.getElementById('rightId') as HTMLInputElement).setAttribute('aria-pressed', 'true');
-  }
-
-  setFontSize(value:any) {
-
-    (document.getElementById('spinButtonId') as HTMLInputElement).innerHTML = value + " pt";
-    (document.getElementById('textarea1') as HTMLInputElement).style.fontSize = value + 'pt';
-    this.fontSize = value;
-  }
-
-  setFontFamily(value:any) {
-
-      (document.getElementById('fontType') as HTMLInputElement).setAttribute('aria-label', 'Font: ' + value);
-      (document.getElementById('fontType') as HTMLInputElement).innerHTML = value;
-      (document.getElementById('fontType') as HTMLInputElement).style.fontFamily = value;
-      (document.getElementById('textarea1') as HTMLInputElement).style.fontFamily = value;
+        this.data.currentBold.subscribe(bold => this.bold = bold);
+        this.data.currentItalic.subscribe(italic => this.italic = italic);
+        this.data.currentUnderline.subscribe(underline => this.underline = underline);
+        this.data.currentLeft.subscribe(left => this.left = left);
+        this.data.currentCenter.subscribe(center => this.center = center);
+        this.data.currentRight.subscribe(right => this.right = right);
+        this.data.currentFontSize.subscribe(fontSize => this.fontSize = fontSize);
   }
 
   BoldPress() {
-      this.bold = !this.bold;
-      this.http.post('http://localhost:5000/tool-box', {'bold': this.bold}).subscribe(data => {});
+      this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'bold': !this.bold}).subscribe(data => {});
   }
 
   ItalicPress() {
-    this.italic = !this.italic;
-    this.http.post('http://localhost:5000/tool-box', {'italic': this.italic}).subscribe(data => {});
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'italic': !this.italic}).subscribe(data => {});
   }
 
   UnderlinePress() {
-    this.underline = !this.underline;
-    this.http.post('http://localhost:5000/tool-box', {'underline': this.underline}).subscribe(data => {});
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'underline': !this.underline}).subscribe(data => {});
   }
 
   LeftPress() {
-    this.left = true;
-    this.center = false;
-    this.right = false;
-    this.http.post('http://localhost:5000/tool-box', {'align': 'left'}).subscribe(data => {});
+    console.log("leftpress");
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'align': 'left'}).subscribe(data => {});
   }
 
   CenterPress() {
-    this.center = true;
-    this.left = false;
-    this.right = false;
-    this.http.post('http://localhost:5000/tool-box', {'align': 'center'}).subscribe(data => {});
+    console.log("centerpress");
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'align': 'center'}).subscribe(data => {});
   }
 
   RightPress() {
-    this.right = true;
-    this.center = false;
-    this.left = false;
-    this.http.post('http://localhost:5000/tool-box', {'align':'right'}).subscribe(data => {});
+    console.log("rightpress");
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'align':'right'}).subscribe(data => {});
   }
 
   IncreasePress() {
-    this.fontSize += 1;
-    this.http.post('http://localhost:5000/tool-box', {'fontSize':this.fontSize}).subscribe(data => {});
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'fontSize':this.fontSize + 1}).subscribe(data => {});
   }
 
   DecreasePress() {
-    this.fontSize -= 1;
-    this.http.post('http://localhost:5000/tool-box', {'fontSize':this.fontSize}).subscribe(data => {});
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'fontSize':this.fontSize - 1}).subscribe(data => {});
   }
 
   SansSerifPress() {
     this.fontFamily = "Sans-Serif"
-    this.http.post('http://localhost:5000/tool-box', {'fontFamily':this.fontFamily}).subscribe(data => {});
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'fontFamily':this.fontFamily}).subscribe(data => {});
   }
 
   SerifPress() {
     this.fontFamily = "Serif"
-    this.http.post('http://localhost:5000/tool-box', {'fontFamily':this.fontFamily}).subscribe(data => {});
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'fontFamily':this.fontFamily}).subscribe(data => {});
   }
 
   MonospacePress() {
     this.fontFamily = "Monospace"
-    this.http.post('http://localhost:5000/tool-box', {'fontFamily':this.fontFamily}).subscribe(data => {});
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'fontFamily':this.fontFamily}).subscribe(data => {});
   }
 
   FantasyPress() {
     this.fontFamily = "Fantasy"
-    this.http.post('http://localhost:5000/tool-box', {'fontFamily':this.fontFamily}).subscribe(data => {});
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'fontFamily':this.fontFamily}).subscribe(data => {});
   }
 
   CursivePress() {
     this.fontFamily = "Cursive"
-    this.http.post('http://localhost:5000/tool-box', {'fontFamily':this.fontFamily}).subscribe(data => {});
+    this.http.post(baseUrl.URL + '/tool-box/' + this.filename, {'fontFamily':this.fontFamily}).subscribe(data => {});
   }
 }

@@ -1,4 +1,4 @@
-<h1>{{ pseudo.value }}</h1>
+<h1 style="font-weight: bold; text-transform: capitalize;">🧑‍💻 {{ pseudo.value }}</h1>
 <a class="icon-bar" (click)="openSelectFiles()">
     <div class="icon-text-bar">
         <i class="material-icons">search</i>Ouvrir
@@ -6,12 +6,7 @@
 </a>
 <a class="icon-bar" (click)="openSaveFiles()">
     <div class="icon-text-bar">
-        <i class="material-icons">save</i>Sauvegarder
-    </div>
-</a>
-<a class="icon-bar" (click)="openRemoveFiles()">
-    <div class="icon-text-bar">
-        <i class="material-icons">delete</i>Supprimer
+        <i class="material-icons">save</i>Nouveau
     </div>
 </a>
 
@@ -19,9 +14,9 @@
     <div class="modal-contents">
         <div class="close" (click)="closeUnsaveFiles()">+</div>
         <form action="">
-            <div class="popupTitle">Sauvegarder</div>
+            <div class="popupTitle">Créer un nouveau fichier</div>
             <input type="text" id="submitSaveInput" placeholder="Nom du fichier">
-            <a href="#" id="submitSaveButton" (click)="closeSaveFiles()" class="button">Valider</a>
+            <a href="#" id="submitSaveButton" (click)="closeSaveFiles()" class="button" style="margin-left: 0px;">Valider</a>
         </form> 
     </div>
 </div>
@@ -33,9 +28,13 @@
             <div class="popupTitle" style="margin-bottom: 30px">Sélectionnez un fichier</div>
             <div style="overflow: hidden; overflow-y: scroll; height: 360px;">
                 <div class="doc_grid" id="grid">
-
-
-
+                    <div *ngIf="allFiles !== undefined">
+                        <div *ngFor="let file of allFiles.data">
+                            <a style="font-size:large;" (click)="clickFilename(file.filename)">
+                                📝{{ file.filename }}
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
@@ -56,7 +55,7 @@
 </div>
 
 <div class="bg-modal-login">
-        <form (ngSubmit)="onSubmitLogin(pseudo)">
+        <form (ngSubmit)="onSubmitLogin(pseudo)" style="border: 1px solid white; padding: 30px; border-radius: 40px;">
             <div class="popupTitle loginTitle">Bienvenue !</div>
             <input type="text" id="loginInput" placeholder="Pseudo" name="pseudo" ngModel required #pseudo="ngModel">
             <button id="loginButton" type="submit" class="button">Valider</button>
@@ -64,9 +63,18 @@
 </div>
 
 <div class="bg-modal-filename">
-    <form (ngSubmit)="onSubmitFilename(filename)">
-        <div class="popupTitle loginFilename">Choisissez un fichier</div>
+    <form (ngSubmit)="onSubmitFilename(filename)" style="border: 1px solid white; padding: 30px; border-radius: 40px;">
+        <div class="popupTitle loginFilename" style="text-decoration: bold;">Choisissez un fichier : </div>
+        <div *ngIf="allFiles !== undefined">
+            <div *ngFor="let file of allFiles.data">
+                <a style="color:#ffffff; font-size: x-large;" (click)="clickFilename(file.filename)">
+                    📝{{ file.filename }}
+                </a>
+            </div>
+        </div>
+        <br>
+        <div class="popupTitle loginFilename" style="text-decoration: bold;">Créer un fichier : </div>
         <input type="text" placeholder="Filename" name="filename" ngModel required #filename="ngModel">
-        <button id="filenameButton" type="submit" class="button">Valider</button>
+        <button id="filenameButton" type="submit" class="button" style="margin-left: 150px; background-color: #0f771d;">Valider</button>
     </form>
 </div>
